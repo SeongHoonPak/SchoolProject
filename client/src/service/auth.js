@@ -1,7 +1,6 @@
 export default class AuthService {
-  constructor(http, tokenStorage) {
+  constructor(http) {
     this.http = http;
-    this.tokenStorage = tokenStorage;
   }
 
   async signup(username, password, name, email, url) {
@@ -15,21 +14,28 @@ export default class AuthService {
         url,
       }),
     });
-    this.tokenStorage.saveToken(data.token);
     return data;
   }
 
   async login(username, password) {
+    
     const data = await this.http.fetch('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
     });
-    this.tokenStorage.saveToken(data.token);
+    console.log('console2',data)
     return data;
   }
 
+  async me() {
+    return this.http.fetch('/auth/me', {
+      method: 'GET',
+    });
+  }
 
   async logout() {
-    this.tokenStorage.clearToken();
+    return this.http.fetch('/auth/logout', {
+      method: 'POST',
+    });
   }
 }

@@ -12,13 +12,11 @@ import Login from "../pages/Login";
 
 const AuthContext = createContext({});
 
-const contextRef = createRef();
+const tokenRef = createRef();
 
 export function AuthProvider({ authService, authErrorEventBus, children }) {
-  console.log("a", children);
   const [user, setUser] = useState(undefined);
-
-  useImperativeHandle(contextRef, () => (user ? user.token : undefined));
+  useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
 
   useEffect(() => {
     authErrorEventBus.listen(err => {
@@ -26,6 +24,10 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
       setUser(undefined);
     });
   }, [authErrorEventBus]);
+
+  useEffect(() => {
+    authService.me().then(setUser).catch(console.error);
+  }, [authService]);
 
   const signUp = useCallback(
     async (username, password, name, email, url) =>
@@ -37,7 +39,7 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
 
   const logIn = useCallback(
     async (username, password) =>
-      authService.login(username, password).then(user => setUser(user)),
+      authService.login(username, password).then(setUser),
     [authService]
   );
 
@@ -55,7 +57,6 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
     }),
     [user, signUp, logIn, logout]
   );
-
   return (
     <AuthContext.Provider value={context}>
       {user ? (
@@ -78,4 +79,5 @@ export class AuthErrorEventBus {
   }
 }
 
+export default AuthContext;
 export const useAuth = () => useContext(AuthContext);

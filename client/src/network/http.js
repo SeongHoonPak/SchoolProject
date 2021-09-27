@@ -1,15 +1,19 @@
 export default class HttpClient {
-    constructor(baseURL) {
+    constructor(baseURL, authErrorEventBus) {
       this.baseURL = baseURL;
+      this.authErrorEventBus = authErrorEventBus;
     }
   
     async fetch(url, options) {
+      
+    console.log('http fetch url?',url)
       const res = await fetch(`${this.baseURL}${url}`, {
         ...options,
         headers: {
           'Content-Type': 'application/json',
           ...options.headers,
         },
+        credentials:'include',
       });
       let data;
       try {

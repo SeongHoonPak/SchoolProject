@@ -1,10 +1,12 @@
-import { useHistory } from "react-router";
-import Products from "./components/products/products";
+import { Route, useHistory } from "react-router-dom";
+import Header from "./components/header/header";
+import Home from "./components/home/home";
+import ProductAdd from "./components/product/productadd";
 import { useAuth } from "./context/AuthContext";
 
-function App() {
+function App({ productService }) {
   const history = useHistory();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   const onLogout = () => {
     if (window.confirm("정말 로그아웃 하겠습니까?")) {
@@ -13,7 +15,18 @@ function App() {
     }
   };
 
-  return <Products onLogout={onLogout} />;
+  return (
+    <>
+      <Header username={user.username} onLogout={onLogout} />
+      <Route exact path="/">
+        <Home />
+      </Route>
+
+      <Route exact path="/productadd">
+        <ProductAdd productService={productService} />
+      </Route>
+    </>
+  );
 }
 
 export default App;

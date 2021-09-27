@@ -19,10 +19,13 @@ export const config = {
     bcrypt: {
         saltRounds: parseInt(required('BCRYPT_SALT_ROUNDS')),
     },
-    host: {
-        port: parseInt(required('HOST_PORT', 8080)),
-    },
+    
+    port: parseInt(required('PORT')),
+
     db: {
         host: required('DB_HOST'), 
-    }
+    },
+    cors: {
+        allowedOrigin: required('CORS_ALLOW_ORIGIN'),
+      },
 };
