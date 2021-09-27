@@ -8,13 +8,20 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useHistory } from "react-router";
 import Login from "../pages/Login";
 
 const AuthContext = createContext({});
 
 const tokenRef = createRef();
 
-export function AuthProvider({ authService, authErrorEventBus, children }) {
+export function AuthProvider({
+  authService,
+  authErrorEventBus,
+  children,
+  FileInput,
+}) {
+  const history = useHistory();
   const [user, setUser] = useState(undefined);
   useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
 
@@ -44,7 +51,12 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
   );
 
   const logout = useCallback(
-    async () => authService.logout().then(() => setUser(undefined)),
+    async () =>
+      authService.logout().then(
+        () => setUser(undefined),
+
+        history.push("/")
+      ),
     [authService]
   );
 
@@ -63,7 +75,7 @@ export function AuthProvider({ authService, authErrorEventBus, children }) {
         children
       ) : (
         <div className="app">
-          <Login onSignUp={signUp} onLogin={logIn} />
+          <Login onSignUp={signUp} onLogin={logIn} FileInput={FileInput} />
         </div>
       )}
     </AuthContext.Provider>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { useAuth } from "../../context/AuthContext";
 
-const ProductAdd = ({ productService }) => {
+const ProductAdd = ({ FileInput, productService, onAuth }) => {
   // const refresh = () => {
   //   window.location.replace("/");
   // };
@@ -9,28 +10,36 @@ const ProductAdd = ({ productService }) => {
   const [productname, setProductname] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-
+  const [producturl, setProductUrl] = useState([]);
   const [error, setError] = useState("");
-
+  const onFileChange = file => {
+    const fileurls = file.url;
+    setProductUrl(url => {
+      return [...url, { fileurls }];
+    });
+  };
   const onSubmit = async event => {
     event.preventDefault();
+    console.log("확인", productname, price, description, producturl);
     productService
-      .postProduct(productname, price, description)
+      .postProduct(productname, price, description, producturl)
       .then(() => {
         // setTimeout(refresh, 200);
-        history.push("/");
+        // history.push("/");
+        window.location.replace("/");
       })
       .catch(setError);
   };
 
-  const erroralert = () => {
-    error && alert(`${error}`);
-  };
+  // const erroralert = () => {
+  //   error && alert(`${error}`);
+  // };
 
-  useEffect(() => {
-    erroralert();
-  }, [error]);
+  // useEffect(() => {
+  //   erroralert();
+  // }, [error]);
 
+  onAuth(useAuth());
   const onChange = event => {
     const {
       target: { name, value },
@@ -43,7 +52,7 @@ const ProductAdd = ({ productService }) => {
       case "description":
         return setDescription(value);
       // case "url":
-      //   return setURL(value);   TODO(Seonghoon)
+      //   return setUrl(value);
       default:
     }
   };
@@ -78,6 +87,7 @@ const ProductAdd = ({ productService }) => {
           required
           onChange={onChange}
         />
+        <FileInput type="text" onFileChange={onFileChange} />
         <button className="form-btn">Post</button>
       </form>
     </>

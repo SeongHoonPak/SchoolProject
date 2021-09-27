@@ -7,6 +7,9 @@ const Home = memo(() => {
       <Link to="/productadd">
         <button>상품등록하기</button>
       </Link>
+      <Link to="/productadd1">
+        <button>상품등록하기111</button>
+      </Link>
     </>
   );
 });

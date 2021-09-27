@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Login = ({ onSignUp, onLogin }) => {
+const Login = ({ onSignUp, onLogin, FileInput }) => {
   const [signup, setSignup] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -10,6 +10,12 @@ const Login = ({ onSignUp, onLogin }) => {
   const [text, setText] = useState("");
   const [isAlert, setIsAlert] = useState(false);
 
+  const onFileChange = file => {
+    const fileurls = file.url;
+    setURL(url => {
+      return [fileurls];
+    });
+  };
   const onSubmit = event => {
     event.preventDefault();
     if (signup) {
@@ -88,15 +94,12 @@ const Login = ({ onSignUp, onLogin }) => {
           />
         )}
         {signup && (
-          <input
-            name="url"
-            type="url"
-            placeholder="Profile Image URL"
-            value={url}
-            onChange={onChange}
-            className="form-input"
-          />
+          <>
+            <h3>사진등록</h3>
+            <FileInput type="text" onFileChange={onFileChange} />
+          </>
         )}
+
         <div className="form-signup">
           <input
             name="signup"

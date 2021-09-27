@@ -20,15 +20,15 @@ export async function getProduct(req, res, next) {
 
 export async function createProduct(req, res, next) {
     console.log('생성하자');
-  const { productname, price, description} = req.body;
-  const Product = await ProductRepository.create(productname, price,description, req.userId);
+  const { productname, price, description, producturl} = req.body;
+  const Product = await ProductRepository.create(productname, price,description, producturl, req.userId);
   console.log('생성 반응')
   res.status(201).json(Product);
 }
 
 export async function updateProduct(req, res, next) {
   const id = req.params.id;
-  const {name, price, description} = req.body;
+  const {name, price, description,producturl} = req.body;
   const Product = await ProductRepository.getById(id);
   if (!Product) {
     return res.status(404).json({ message: `Product not found: ${id}` });
@@ -36,7 +36,7 @@ export async function updateProduct(req, res, next) {
   if (Product.userId !== req.userId) {
     return res.sendStatus(403);
   }
-  const updated = await ProductRepository.update(id, name, price, description);
+  const updated = await ProductRepository.update(id, name, price, description, producturl);
   res.status(200).json(updated);
 }
 

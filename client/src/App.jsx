@@ -1,29 +1,43 @@
+import { useEffect, useState } from "react";
 import { Route, useHistory } from "react-router-dom";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
 import ProductAdd from "./components/product/productadd";
-import { useAuth } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 
-function App({ productService }) {
-  const history = useHistory();
-  const { user, logout } = useAuth();
-
-  const onLogout = () => {
-    if (window.confirm("정말 로그아웃 하겠습니까?")) {
-      logout();
-      history.push("/");
-    }
+function App({ FileInput, productService, authService, authErrorEventBus }) {
+  const [Auth, setAuth] = useState({});
+  const onAuth = text => {
+    setAuth(text);
   };
+  const user = Auth && Auth.user;
+  const logout = Auth && Auth.logout;
+  console.log("로그아웃", logout);
 
   return (
     <>
-      <Header username={user.username} onLogout={onLogout} />
+      {console.log("aacc", user)}
+      <Header
+        username={user && user.username}
+        onLogout={logout}
+        onAuth={onAuth}
+      />
       <Route exact path="/">
         <Home />
       </Route>
 
       <Route exact path="/productadd">
-        <ProductAdd productService={productService} />
+        <AuthProvider
+          authService={authService}
+          authErrorEventBus={authErrorEventBus}
+          FileInput={FileInput}
+        >
+          <ProductAdd
+            FileInput={FileInput}
+            onAuth={onAuth}
+            productService={productService}
+          />
+        </AuthProvider>
       </Route>
     </>
   );
