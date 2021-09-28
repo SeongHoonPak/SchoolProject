@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useAuth } from "../../context/AuthContext";
 
-const ProductAdd = ({ FileInput, productService, onAuth }) => {
+const ProductAdd = ({ FileInput, productService }) => {
   // const refresh = () => {
   //   window.location.replace("/");
   // };
@@ -39,7 +39,6 @@ const ProductAdd = ({ FileInput, productService, onAuth }) => {
   //   erroralert();
   // }, [error]);
 
-  onAuth(useAuth());
   const onChange = event => {
     const {
       target: { name, value },

@@ -108,7 +108,7 @@ const Login = ({ onSignUp, onLogin, FileInput }) => {
             onChange={onChange}
             checked={signup}
           />
-          <label htmlFor="signup"> Create a new account?</label>
+          <label htmlFor="signup"> 회원가입 하시겠습니까?</label>
         </div>
         <button className="form-btn auth-form-btn" type="submit">
           {signup ? "Sign Up" : "Sign In"}

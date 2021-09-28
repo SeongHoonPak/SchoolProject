@@ -1,16 +1,9 @@
 import React, { memo } from "react";
 import { useHistory } from "react-router";
 
-const Header = memo(({ username, onLogout, onAuth }) => {
+const Header = memo(({ username, onLogout }) => {
   const history = useHistory();
-  console.log("asdsad", onLogout);
-  const onLogout1 = () => {
-    if (window.confirm("정말 로그아웃 할거야?")) {
-      onLogout();
-      onAuth();
-      history.push("/");
-    }
-  };
+
   return (
     <header className="header">
       <div className="logo">
@@ -20,7 +13,7 @@ const Header = memo(({ username, onLogout, onAuth }) => {
       </div>
       {username && (
         <nav className="menu">
-          <button className="menu-item" onClick={onLogout1}>
+          <button className="menu-item" onClick={onLogout}>
             Logout
           </button>
         </nav>

@@ -18,7 +18,7 @@ app.use(cors(corsOption));
 
 app.use('/auth', authRouter);
 
-app.use('/Products', productRouter);
+app.use('/products', productRouter);
 
 
 app.listen(config.port);

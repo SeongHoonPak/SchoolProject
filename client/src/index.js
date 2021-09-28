@@ -25,9 +25,15 @@ const FileInput = props => (
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-    
-      <App productService = {productService} authService={authService}
-      authErrorEventBus={authErrorEventBus} FileInput = {FileInput}/>
+    <AuthProvider
+          authService={authService}
+          authErrorEventBus={authErrorEventBus}
+          FileInput={FileInput}
+        >
+      <App productService = {productService} 
+      FileInput = {FileInput}/>
+      
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
