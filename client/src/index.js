@@ -10,6 +10,12 @@ import HttpClient from './network/http';
 import ProductService from './service/product';
 import ImageUploader from './service/image_uploader';
 import ImageFileInput from './components/image_file_input/image_file_input';
+import {Provider} from 'react-redux'
+import {createStore} from 'redux'
+import {composeWithDevTools} from 'redux-devtools-extension'
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';	
+import persistedReducer from './modules';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 const authErrorEventBus = new AuthErrorEventBus();
@@ -21,20 +27,18 @@ const imageUploader = new ImageUploader();
 const FileInput = props => (
   <ImageFileInput {...props} imageUploader = {imageUploader}/>
 );
-
+const store = createStore(persistedReducer, composeWithDevTools());
+const persistor = persistStore(store)
 ReactDOM.render(
-  <React.StrictMode>
+    <Provider store={store}>
+     <PersistGate persistor={persistor}>
     <BrowserRouter>
-    <AuthProvider
-          authService={authService}
+   
+      <App productService = {productService} authService={authService}
           authErrorEventBus={authErrorEventBus}
-          FileInput={FileInput}
-        >
-      <App productService = {productService} 
       FileInput = {FileInput}/>
-      
-      </AuthProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
+    </BrowserRouter> 
+    </PersistGate>	
+  </Provider>,
   document.getElementById('root')
 );

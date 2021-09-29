@@ -8,19 +8,18 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useDispatch } from "react-redux";
+
 import { useHistory } from "react-router";
+import { loginAction, logoutAction } from "../modules/user";
 import Login from "../pages/Login";
 
 const AuthContext = createContext({});
 
 const tokenRef = createRef();
 
-export function AuthProvider({
-  authService,
-  authErrorEventBus,
-  children,
-  FileInput,
-}) {
+export function AuthProvider({ authService, authErrorEventBus, FileInput }) {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [user, setUser] = useState(undefined);
   useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
@@ -45,20 +44,24 @@ export function AuthProvider({
   );
 
   const logIn = useCallback(
-    async (username, password) =>
-      authService.login(username, password).then(setUser),
+    async (username, password) => {
+      const user = await authService.login(username, password);
+      console.log("user찍", user.username);
+      dispatch(loginAction(user.username, logout));
+      setUser(user);
+
+      history.push("/");
+    },
     [authService]
   );
 
-  const logout = useCallback(
-    async () =>
-      authService.logout().then(
-        () => setUser(undefined),
-
-        history.push("/")
-      ),
-    [authService]
-  );
+  const logout = useCallback(async () => {
+    console.log("로그아웃 실행");
+    await authService.logout();
+    setUser(undefined);
+    dispatch(logoutAction());
+    history.push("/");
+  }, [authService]);
 
   const context = useMemo(
     () => ({
@@ -67,18 +70,12 @@ export function AuthProvider({
       logIn,
       logout,
     }),
-    [user, signUp, logIn, logout]
+    [user, signUp, logIn]
   );
   return (
-    <AuthContext.Provider value={context}>
-      {user ? (
-        children
-      ) : (
-        <div className="app">
-          <Login onSignUp={signUp} onLogin={logIn} FileInput={FileInput} />
-        </div>
-      )}
-    </AuthContext.Provider>
+    <div className="app">
+      <Login onSignUp={signUp} onLogin={logIn} FileInput={FileInput} />
+    </div>
   );
 }
 
@@ -90,6 +87,3 @@ export class AuthErrorEventBus {
     this.callback(error);
   }
 }
-
-export default AuthContext;
-export const useAuth = () => useContext(AuthContext);
