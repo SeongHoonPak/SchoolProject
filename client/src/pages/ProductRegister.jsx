@@ -5,23 +5,24 @@ const ProductRegister = ({ FileInput, productService }) => {
   const historyState = history.location.state
     ? history.location.state.products
     : "";
-  const { id, name, description, price, url, producturl } = historyState;
-  const [producturls, setProducturls] = useState([]);
+  console.log("xzvavasv", historyState);
+  const { id, productname, description, price, producturls } = historyState;
+  const [producturl, setProducturl] = useState([]);
   const [error, setError] = useState("");
 
   const onFileChange = file => {
     const fileurls = file.url;
-    setProducturls(producturls => {
-      return [...producturls, { fileurls }];
+    setProducturl(producturl => {
+      return [...producturl, { fileurls }];
     });
   };
 
   const [product, setProduct] = useState({
     id: id,
-    name: name,
+    name: productname,
     description: description,
     price: price,
-    producturls: producturls,
+    producturl: producturls,
   });
   const onSubmit = async event => {
     event.preventDefault();
@@ -72,10 +73,10 @@ const ProductRegister = ({ FileInput, productService }) => {
     setProduct(product => {
       return {
         ...product,
-        producturls: producturls,
+        producturl: producturl,
       };
     });
-  }, [error, producturls]);
+  }, [error, producturl]);
   return (
     <>
       <form onSubmit={onSubmit}>

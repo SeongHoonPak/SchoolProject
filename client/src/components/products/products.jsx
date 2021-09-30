@@ -9,9 +9,14 @@ const Products = memo(
     const { usernamed } = useSelector(state => ({
       usernamed: state.user.username,
     }));
-    const { id, username, productname, producturls, url, createdAt, one } =
+    const { id, username, productname, producturl, url, createdAt, one } =
       product;
     const path = "/" + id;
+    const onClickid = event => {
+      productService
+        .getProduct(id) // id에 맞는 상품 들고오기
+        .then(product => gotoProductadd(product));
+    };
     const gotoProductadd = product => {
       history.push({
         pathname: "/productRegister",
@@ -44,7 +49,7 @@ const Products = memo(
                   @{username}
                 </span>
                 <span className="product-date"> · {parseDate(createdAt)}</span>
-                {producturls.map(url => {
+                {producturl.map(url => {
                   return (
                     <img
                       key={Math.random()}
@@ -60,10 +65,7 @@ const Products = memo(
                     <button className="tweet-action-btn" onClick={onDelete}>
                       x
                     </button>
-                    <button
-                      className="tweet-action-btn"
-                      // onClick={() => setEditing(true)}
-                    >
+                    <button className="tweet-action-btn" onClick={onClickid}>
                       ✎
                     </button>
                   </div>

@@ -13,6 +13,7 @@ function App({ FileInput, productService, authErrorEventBus, authService }) {
   const { username } = useSelector(state => ({
     username: state.user.username,
   }));
+
   const onLogout = useCallback(async () => {
     if (window.confirm("정말 로그아웃 할거야?")) {
       await authService.logout();
@@ -35,10 +36,23 @@ function App({ FileInput, productService, authErrorEventBus, authService }) {
       </Route>
 
       <Route exact path="/productRegister">
-        <ProductRegister
-          FileInput={FileInput}
-          productService={productService}
-        />
+        {username ? (
+          <ProductRegister
+            FileInput={FileInput}
+            productService={productService}
+          />
+        ) : (
+          <AuthProvider
+            authService={authService}
+            authErrorEventBus={authErrorEventBus}
+            FileInput={FileInput}
+          >
+            <ProductRegister
+              FileInput={FileInput}
+              productService={productService}
+            />
+          </AuthProvider>
+        )}
       </Route>
       <Route exact path="/login">
         <AuthProvider

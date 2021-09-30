@@ -40,6 +40,7 @@ export function AuthProvider({ authService, authErrorEventBus, FileInput }) {
   const logIn = useCallback(
     async (username, password) => {
       const user = await authService.login(username, password);
+
       dispatch(loginAction(user.username, logout));
 
       history.push("/");
@@ -52,11 +53,12 @@ export function AuthProvider({ authService, authErrorEventBus, FileInput }) {
     dispatch(logoutAction());
     history.push("/");
   }, [authService]);
-
   return (
-    <div className="app">
-      <Login onSignUp={signUp} onLogin={logIn} FileInput={FileInput} />
-    </div>
+    <>
+      <div className="app">
+        <Login onSignUp={signUp} onLogin={logIn} FileInput={FileInput} />
+      </div>
+    </>
   );
 }
 
