@@ -1,59 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router";
-import { useAuth } from "../../context/AuthContext";
+import React, { useState } from "react";
 
-const ProductAdd = ({ FileInput, productService }) => {
-  // const refresh = () => {
-  //   window.location.replace("/");
-  // };
-  const history = useHistory();
-  const [productname, setProductname] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [producturl, setProductUrl] = useState([]);
+const EditProductForm = ({ product, onUpdate, onClose, FileInput }) => {
+  const [name, setName] = useState(product.name);
+  const [price, setPrice] = useState(product.price);
+  const [description, setDescription] = useState(product.description);
+  const [url, setUrl] = useState([]);
   const [error, setError] = useState("");
+  const onSubmit = async event => {
+    // event.preventDefault();
+    // onUpdate(product.id, text);
+    onClose();
+  };
   const onFileChange = file => {
     const fileurls = file.url;
-    setProductUrl(url => {
+    setUrl(url => {
       return [...url, { fileurls }];
     });
   };
-  const onSubmit = async event => {
-    event.preventDefault();
-    console.log("확인", productname, price, description, producturl);
-    productService
-      .postProduct(productname, price, description, producturl)
-      .then(() => {
-        // setTimeout(refresh, 200);
-        // history.push("/");
-        window.location.replace("/");
-      })
-      .catch(setError);
-  };
-
-  // const erroralert = () => {
-  //   error && alert(`${error}`);
-  // };
-
-  // useEffect(() => {
-  //   erroralert();
-  // }, [error]);
-
   const onChange = event => {
     const {
       target: { name, value },
     } = event;
     switch (name) {
       case "productname":
-        return setProductname(value);
+        return setName(value);
       case "price":
         return setPrice(value);
       case "description":
         return setDescription(value);
-      // case "url":
-      //   return setUrl(value);
       default:
     }
+    console.log(name, price, description);
   };
 
   return (
@@ -63,7 +40,7 @@ const ProductAdd = ({ FileInput, productService }) => {
           name="productname"
           type="text"
           placeholder="Edit product name"
-          value={productname}
+          value={name}
           required
           autoFocus
           onChange={onChange}
@@ -93,4 +70,4 @@ const ProductAdd = ({ FileInput, productService }) => {
   );
 };
 
-export default ProductAdd;
+export default EditProductForm;

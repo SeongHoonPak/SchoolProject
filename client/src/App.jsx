@@ -1,34 +1,45 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
-import ProductAdd from "./components/product/productadd";
 import { AuthProvider } from "./context/AuthContext";
 import { logoutAction } from "./modules/user";
+import ProductRegister from "./pages/ProductRegister";
+import ThisProducts from "./pages/ThisProducts";
 
 function App({ FileInput, productService, authErrorEventBus, authService }) {
   const dispatch = useDispatch();
-  const logout = useCallback(async () => {
-    window.confirm("정말 로그아웃 할거야?");
-    await authService.logout();
-    dispatch(logoutAction());
-  }, [authService]);
-
   const { username } = useSelector(state => ({
     username: state.user.username,
   }));
-  console.log("네임", username);
+  const onLogout = useCallback(async () => {
+    if (window.confirm("정말 로그아웃 할거야?")) {
+      await authService.logout();
+      dispatch(logoutAction());
+    }
+  }, [authService]);
+
   return (
     <>
-      <Header username={username} onLogout={logout} />
+      <Header username={username} onLogout={onLogout} />
       <Route exact path="/">
-        <Home />
+        <Home
+          username={username}
+          productService={productService}
+          FileInput={FileInput}
+        />
       </Route>
-      <Route exact path="/productadd">
-        <ProductAdd FileInput={FileInput} productService={productService} />
+      <Route exact path="/:id">
+        <ThisProducts productService={productService} />
       </Route>
 
+      <Route exact path="/productRegister">
+        <ProductRegister
+          FileInput={FileInput}
+          productService={productService}
+        />
+      </Route>
       <Route exact path="/login">
         <AuthProvider
           authService={authService}
