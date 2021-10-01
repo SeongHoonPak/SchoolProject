@@ -72,9 +72,12 @@ const ProductRegister = ({ FileInput, productService }) => {
       default:
     }
   };
-
+  const erroralert = () => {
+    error && alert(`${error}`);
+  };
   console.log("product.producturl", product.producturl);
   useEffect(() => {
+    erroralert();
     setProduct(product => {
       return {
         ...product,

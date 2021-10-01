@@ -9,10 +9,11 @@ export const isAuth = async (req, res, next) => {
     
   const authHeader = req.get('Authorization');
   if ((authHeader && authHeader.startsWith('Bearer '))) {
-
+    console.log("헤더 체크")
    token = authHeader.split(' ')[1];
   }
   if(!token){
+    console.log("브라우저 쿠키 체크");
     token = req.cookies['token'];  
   }
 

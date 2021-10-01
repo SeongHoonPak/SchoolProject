@@ -5,6 +5,7 @@ import helmet from'helmet';
 import authRouter from './router/auth.js';
 import productRouter from './router/product.js';
 import { config } from './config.js';
+import { csrfCheck } from './middleware/csrf.js';
 const app = express();
 const corsOption = {
     origin: config.cors.allowedOrigin,
@@ -16,6 +17,8 @@ app.use(cookieParser());
 app.use(helmet())
 app.use(cors(corsOption));
 
+
+// app.use(csrfCheck)
 app.use('/auth', authRouter);
 
 app.use('/products', productRouter);

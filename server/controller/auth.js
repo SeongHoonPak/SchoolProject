@@ -51,6 +51,18 @@ function createJwtToken(id) {
     return jwt.sign({ id }, config.jwt.secretKey, { expiresIn: config.jwt.expiresInSec });
   }
   
+
+  function setToken(res, token){
+    const options = {
+      maxAge: config.jwt.expiresInSec * 1000,
+      httpOnly: true,
+      sameSite: 'none', 
+      secure: true,     
+    }
+    res.cookie('token', token, options)
+  }
+  
+  
 export async function me(req, res, next) {
   console.log(req);
     const user = await userRepository.findById(req.userId);
@@ -61,12 +73,14 @@ export async function me(req, res, next) {
   }
   
   
-function setToken(res, token){
-  const options = {
-    maxAge: config.jwt.expiresInSec * 1000,
-    httpOnly: true,
-    sameSite: 'none',
-    secure: true,
+
+  export async function csrfToken(req, res, next) {
+    const csrfToken = await generateCSRFToken();
+    res.status(200).json({ csrfToken });
   }
-  res.cookie('token', token, options)
-}
+  
+  async function generateCSRFToken() {
+    return bcrypt.hash(config.csrf.plainToken, 1);
+  }
+  
+

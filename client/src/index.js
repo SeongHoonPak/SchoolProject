@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import AuthService from './service/auth';
-import {AuthProvider} from './context/AuthContext';
-import {AuthErrorEventBus} from './context/AuthContext';
+import {AuthErrorEventBus, fetchCsrfToken} from './context/AuthContext';
 import { BrowserRouter } from 'react-router-dom';
 import HttpClient from './network/http';
 import ProductService from './service/product';
@@ -19,7 +18,7 @@ import persistedReducer from './modules';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 const authErrorEventBus = new AuthErrorEventBus();
-const httpClient = new HttpClient(baseURL);
+const httpClient = new HttpClient(baseURL, authErrorEventBus, () => fetchCsrfToken());
 const authService = new AuthService(httpClient);
 const productService = new ProductService(httpClient);
 const imageUploader = new ImageUploader();

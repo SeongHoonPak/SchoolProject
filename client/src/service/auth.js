@@ -38,4 +38,11 @@ export default class AuthService {
       method: 'POST',
     });
   }
+  async csrfToken() {
+    const resp = await this.http.fetch('/auth/csrf-token', {
+      method: 'GET',
+    });
+    console.log('csrf 실행한다', resp);
+    return resp.csrfToken;
+  }
 }

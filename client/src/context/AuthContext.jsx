@@ -11,19 +11,24 @@ import { useHistory } from "react-router";
 import { loginAction, logoutAction } from "../modules/user";
 import Login from "../pages/Login";
 
-const tokenRef = createRef();
+const csrfRef = createRef();
 
 export function AuthProvider({ authService, authErrorEventBus, FileInput }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [user, setUser] = useState(undefined);
-  useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
-
+  const [csrfToken, setCsrfToken] = useState(undefined);
+  // useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
+  useImperativeHandle(csrfRef, () => csrfToken);
   useEffect(() => {
     authErrorEventBus.listen(err => {
       console.log(err);
     });
   }, [authErrorEventBus]);
+
+  useEffect(() => {
+    authService.csrfToken().then(setCsrfToken).catch(console.error);
+  }, [authService]);
 
   useEffect(() => {
     authService.me().then().catch(console.error);
@@ -53,6 +58,7 @@ export function AuthProvider({ authService, authErrorEventBus, FileInput }) {
     dispatch(logoutAction());
     history.push("/");
   }, [authService]);
+
   return (
     <>
       <div className="app">
@@ -70,3 +76,4 @@ export class AuthErrorEventBus {
     this.callback(error);
   }
 }
+export const fetchCsrfToken = () => csrfRef.current;
