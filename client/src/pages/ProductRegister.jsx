@@ -6,24 +6,28 @@ const ProductRegister = ({ FileInput, productService }) => {
     ? history.location.state.products
     : "";
   console.log("xzvavasv", historyState);
-  const { id, productname, description, price, producturls } = historyState;
-  const [producturl, setProducturl] = useState([]);
+  const { id, productname, description, price, producturl } = historyState;
+  const [producturls, setProducturls] = useState([]);
   const [error, setError] = useState("");
 
   const onFileChange = file => {
     const fileurls = file.url;
-    setProducturl(producturl => {
-      return [...producturl, { fileurls }];
+    setProducturls(producturls => {
+      return [...producturls, { fileurls }];
     });
   };
 
   const [product, setProduct] = useState({
-    id: id,
+    id,
+    description,
+    price,
+    producturl,
     name: productname,
-    description: description,
-    price: price,
-    producturl: producturls,
   });
+
+  console.log("ch", product);
+
+  console.log("ch", historyState);
   const onSubmit = async event => {
     event.preventDefault();
     historyState
@@ -69,14 +73,15 @@ const ProductRegister = ({ FileInput, productService }) => {
     }
   };
 
+  console.log("product.producturl", product.producturl);
   useEffect(() => {
     setProduct(product => {
       return {
         ...product,
-        producturl: producturl,
+        producturl: producturls,
       };
     });
-  }, [error, producturl]);
+  }, [error, producturls]);
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -108,6 +113,13 @@ const ProductRegister = ({ FileInput, productService }) => {
           onChange={onChange}
         />
         <FileInput type="text" onFileChange={onFileChange} />
+        <p>등록 하려고 하는 이미지</p>
+
+        {product.producturl &&
+          product.producturl.map(url => {
+            return <img src={url.fileurls} />;
+          })}
+        <h1>gd</h1>
         <button className="form-btn">Post</button>
       </form>
     </>

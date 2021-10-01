@@ -5,7 +5,6 @@ import * as userRepository from '../data/auth.js';
 const AUTH_ERROR = { message: 'Authentication Error' };
 
 export const isAuth = async (req, res, next) => {
-
     let token;
     
   const authHeader = req.get('Authorization');

@@ -23,7 +23,7 @@ export default class AuthService {
       method: 'POST',
       body: JSON.stringify({ username, password }),
     });
-    console.log('console2',data)
+    console.log('로그인 데이터',data)
     return data;
   }
 

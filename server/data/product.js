@@ -21,7 +21,10 @@ let products = [
     createdAt: new Date().toString(),
     description: "2번상품입니다",
     userId: '2',
-    producturl: [
+    producturl: [  
+      {
+        fileurls: 'http://res.cloudinary.com/dyhlgmuki/image/upload/v1633069711/cdyrv5ikxnqhji6akfto.jpg'
+      },
       {
           "fileurls": "http://res.cloudinary.com/dyhlgmuki/image/upload/v1633003020/zecsnmc0aqlyb2zu99j9.jpg"
       }
