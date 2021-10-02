@@ -5,11 +5,12 @@ export const csrfCheck = (req, res, next) => {
   if (
     req.method === 'GET' ||
     req.method === 'OPTIONS' ||
-    req.method === 'HEAD'
+    req.method === 'HEAD' ||
+    req.originalUrl === '/auth/logout'
   ) {
     return next();
   }
-
+console.log('czcz',req.originalUrl)
   const csrfHeader = req.get('school-csrf-token');
 
   if (!csrfHeader) {
@@ -27,6 +28,7 @@ export const csrfCheck = (req, res, next) => {
         );
         return res.status(403).json({ message: 'Failed CSRF check' });
       }
+      console.log('csrf 체크통과!')
       next();
     })
     .catch((err) => {

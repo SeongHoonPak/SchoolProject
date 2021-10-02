@@ -18,6 +18,7 @@ export const isAuth = async (req, res, next) => {
   }
 
   if(!token){
+    console.log('다없어')
     return res.status(401).json(AUTH_ERROR);  
   }
   jwt.verify(

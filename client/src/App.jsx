@@ -18,6 +18,7 @@ function App({ FileInput, productService, authErrorEventBus, authService }) {
     if (window.confirm("정말 로그아웃 할거야?")) {
       await authService.logout();
       dispatch(logoutAction());
+      window.location.replace("/");
     }
   }, [authService]);
 
@@ -34,26 +35,19 @@ function App({ FileInput, productService, authErrorEventBus, authService }) {
       <Route exact path="/:id">
         <ThisProducts productService={productService} />
       </Route>
-
       <Route exact path="/productRegister">
-        {username ? (
+        <AuthProvider
+          authService={authService}
+          authErrorEventBus={authErrorEventBus}
+          FileInput={FileInput}
+        >
           <ProductRegister
             FileInput={FileInput}
             productService={productService}
           />
-        ) : (
-          <AuthProvider
-            authService={authService}
-            authErrorEventBus={authErrorEventBus}
-            FileInput={FileInput}
-          >
-            <ProductRegister
-              FileInput={FileInput}
-              productService={productService}
-            />
-          </AuthProvider>
-        )}
+        </AuthProvider>
       </Route>
+
       <Route exact path="/login">
         <AuthProvider
           authService={authService}

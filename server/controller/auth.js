@@ -71,6 +71,8 @@ export async function me(req, res, next) {
     }
     res.status(200).json({ token: req.token, username: user.username });
   }
+
+      
   
   
 

@@ -10,11 +10,11 @@ const validateCredential = [
     body('username')
       .trim()
       .notEmpty()
-      .withMessage('username should be at least 5 characters'),
+      .withMessage('username은 5자 이상으로 해주세요'),
     body('password')
       .trim()
       .isLength({ min: 5 })
-      .withMessage('password should be at least 5 characters'),
+      .withMessage('password는 5자 이상으로 해주세요'),
     validate,
   ];
   
@@ -34,6 +34,8 @@ router.post('/signup', validateSignup, authController.signup);
 router.post('/login', validateCredential, authController.login);
 
 router.post('/logout', authController.logout);
+
+// router.get('/user', authController.user);
 
 router.get('/me', isAuth, authController.me);
 

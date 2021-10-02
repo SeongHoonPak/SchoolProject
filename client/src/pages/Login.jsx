@@ -6,14 +6,14 @@ const Login = ({ onSignUp, onLogin, FileInput }) => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [url, setURL] = useState("");
+  const [url, setUrl] = useState("");
   const [text, setText] = useState("");
   const [isAlert, setIsAlert] = useState(false);
 
   const onFileChange = file => {
     const fileurls = file.url;
-    setURL(url => {
-      return [fileurls];
+    setUrl(url => {
+      return [url];
     });
   };
   const onSubmit = event => {
@@ -43,8 +43,6 @@ const Login = ({ onSignUp, onLogin, FileInput }) => {
         return setName(value);
       case "email":
         return setEmail(value);
-      case "url":
-        return setURL(value);
       case "signup":
         return setSignup(checked);
       default:
@@ -95,7 +93,7 @@ const Login = ({ onSignUp, onLogin, FileInput }) => {
         )}
         {signup && (
           <>
-            <h3>사진등록</h3>
+            <h3>프로필 사진등록</h3>
             <FileInput type="text" onFileChange={onFileChange} />
           </>
         )}

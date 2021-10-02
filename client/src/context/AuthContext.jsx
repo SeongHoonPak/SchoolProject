@@ -13,9 +13,13 @@ import Login from "../pages/Login";
 
 const csrfRef = createRef();
 
-export function AuthProvider({ authService, authErrorEventBus, FileInput }) {
+export function AuthProvider({
+  authService,
+  authErrorEventBus,
+  FileInput,
+  children,
+}) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [user, setUser] = useState(undefined);
   const [csrfToken, setCsrfToken] = useState(undefined);
   // useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
@@ -23,6 +27,7 @@ export function AuthProvider({ authService, authErrorEventBus, FileInput }) {
   useEffect(() => {
     authErrorEventBus.listen(err => {
       console.log(err);
+      setUser(undefined);
     });
   }, [authErrorEventBus]);
 
@@ -31,39 +36,49 @@ export function AuthProvider({ authService, authErrorEventBus, FileInput }) {
   }, [authService]);
 
   useEffect(() => {
-    authService.me().then().catch(console.error);
+    authService.me().then(setUser).catch(console.error);
   }, [authService]);
 
   const signUp = useCallback(
     async (username, password, name, email, url) =>
-      authService
-        .signup(username, password, name, email, url)
-        .then(history.push("/")),
+      authService.signup(username, password, name, email, url).then(user => {
+        setUser(user);
+        dispatch(loginAction(user.username));
+        window.location.replace("/");
+      }),
     [authService]
   );
 
   const logIn = useCallback(
     async (username, password) => {
       const user = await authService.login(username, password);
-
-      dispatch(loginAction(user.username, logout));
-
-      history.push("/");
+      setUser(user);
+      dispatch(loginAction(user.username));
+      window.location.replace("/");
+      // history.push("/");
     },
     [authService]
   );
 
-  const logout = useCallback(async () => {
-    await authService.logout();
-    dispatch(logoutAction());
-    history.push("/");
-  }, [authService]);
+  // const logout = useCallback(async () => {
+  //   await authService.logout();
+  //   setUser(undefined);
+  //   dispatch(logoutAction());
+  //   history.push("/");
+  // }, [authService]);
 
   return (
     <>
-      <div className="app">
-        <Login onSignUp={signUp} onLogin={logIn} FileInput={FileInput} />
-      </div>
+      {
+        (console.log("유저체크", user),
+        user ? (
+          children
+        ) : (
+          <div className="app">
+            <Login onSignUp={signUp} onLogin={logIn} FileInput={FileInput} />
+          </div>
+        ))
+      }
     </>
   );
 }
