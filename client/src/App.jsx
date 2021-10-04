@@ -47,7 +47,6 @@ function App({ FileInput, productService, authErrorEventBus, authService }) {
           />
         </AuthProvider>
       </Route>
-
       <Route exact path="/login">
         <AuthProvider
           authService={authService}

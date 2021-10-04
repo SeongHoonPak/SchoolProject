@@ -6,6 +6,9 @@ import authRouter from './router/auth.js';
 import productRouter from './router/product.js';
 import { config } from './config.js';
 import { csrfCheck } from './middleware/csrf.js';
+import rateLimit from './middleware/rate-limiter.js';
+
+
 const app = express();
 const corsOption = {
     origin: config.cors.allowedOrigin,
@@ -16,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(helmet())
 app.use(cors(corsOption));
-
+app.use(rateLimit);
 
 app.use(csrfCheck)
 app.use('/auth', authRouter);
