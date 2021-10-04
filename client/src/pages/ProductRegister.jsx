@@ -7,16 +7,17 @@ const ProductRegister = ({ FileInput, productService }) => {
     : "";
   console.log("xzvavasv", historyState);
   const { id, productname, description, price, producturl } = historyState;
+  const [imgview, setImgview] = useState(producturl && producturl);
   const [producturls, setProducturls] = useState([]);
   const [error, setError] = useState("");
 
   const onFileChange = file => {
     const fileurls = file.url;
+    setImgview();
     setProducturls(producturls => {
       return [...producturls, { fileurls }];
     });
   };
-
   const [product, setProduct] = useState({
     id,
     description,
@@ -75,7 +76,6 @@ const ProductRegister = ({ FileInput, productService }) => {
   const erroralert = () => {
     error && alert(`${error}`);
   };
-  console.log("product.producturl", product.producturl);
   useEffect(() => {
     erroralert();
     setProduct(product => {
@@ -85,6 +85,7 @@ const ProductRegister = ({ FileInput, productService }) => {
       };
     });
   }, [error, producturls]);
+
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -116,12 +117,17 @@ const ProductRegister = ({ FileInput, productService }) => {
           onChange={onChange}
         />
         <FileInput type="text" onFileChange={onFileChange} />
-        <p>등록 하려고 하는 이미지</p>
 
+        <p>등록 하려고 하는 이미지</p>
+        {imgview &&
+          imgview.map(url => {
+            return <img src={url.fileurls} />;
+          })}
         {product.producturl &&
           product.producturl.map(url => {
             return <img src={url.fileurls} />;
           })}
+
         <h1>gd</h1>
         <button className="form-btn">Post</button>
       </form>

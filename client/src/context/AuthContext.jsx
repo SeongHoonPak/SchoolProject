@@ -56,7 +56,7 @@ export function AuthProvider({
       const user = await authService.login(username, password);
       setUser(user);
       dispatch(loginAction(user.username));
-      // window.location.replace("/");
+      window.location.replace("/");
       // history.push("/");
     },
     [authService]

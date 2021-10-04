@@ -11,15 +11,14 @@ export default class HttpClient {
       this.getCsrfToken = getCsrfToken;
       this.client = axios.create({
         baseURL: baseURL,
-        headers: {
+        headers: { 
           'Content-Type': 'application/json'
-          
         },withCredentials: true,
       });
       axiosRetry(this.client, {
+        
         retries: config.retries,
         retryDelay: (retry) => {
-          console.log('retry?',retry);
           const delay = Math.pow(2, retry) * config.initialDelayMs;
           const jitter = delay * 0.1 * Math.random();
           return delay + jitter;
@@ -39,8 +38,6 @@ export default class HttpClient {
         },
         data: body,
       }
-
-   
       try {
         const res = await this.client(req);
         return res.data;
