@@ -12,9 +12,9 @@ export default class HttpClient {
       this.client = axios.create({
         baseURL: baseURL,
         headers: {
-          'Content-Type': 'application/json',
-          withCredentials: true,
-        }
+          'Content-Type': 'application/json'
+          
+        },withCredentials: true,
       });
       axiosRetry(this.client, {
         retries: config.retries,

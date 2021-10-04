@@ -66,9 +66,12 @@ function createJwtToken(id) {
 export async function me(req, res, next) {
   console.log(req);
     const user = await userRepository.findById(req.userId);
+    
+    console.log('토큰발행', req.token)
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    console.log('토큰발행', req.token)
     res.status(200).json({ token: req.token, username: user.username });
   }
 

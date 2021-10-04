@@ -19,6 +19,7 @@ export function AuthProvider({
   FileInput,
   children,
 }) {
+  console.log("Auth 실행ㅎㄴ다");
   const dispatch = useDispatch();
   const [user, setUser] = useState(undefined);
   const [csrfToken, setCsrfToken] = useState(undefined);
@@ -36,6 +37,7 @@ export function AuthProvider({
   }, [authService]);
 
   useEffect(() => {
+    console.log("me 실행한다");
     authService.me().then(setUser).catch(console.error);
   }, [authService]);
 
@@ -54,7 +56,7 @@ export function AuthProvider({
       const user = await authService.login(username, password);
       setUser(user);
       dispatch(loginAction(user.username));
-      window.location.replace("/");
+      // window.location.replace("/");
       // history.push("/");
     },
     [authService]
