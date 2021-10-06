@@ -29,8 +29,10 @@ export async function createProduct(req, res, next) {
 }
 
 export async function updateProduct(req, res, next) {
+  
   const id = req.params.id;
   const {name, price, description,producturl} = req.body;
+  console.log('확인',producturl)
   const Product = await ProductRepository.getById(id);
   if (!Product) {
     return res.status(404).json({ message: `Product not found: ${id}` });
