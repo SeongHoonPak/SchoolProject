@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const Cart = ({ user }) => {
-  console.log("user", user);
-  return <h1>gd</h1>;
+const Cart = ({ cartService }) => {
+  useEffect(() => {
+    cartService.getProducts().then(pr => {
+      console.log("data;;;", pr);
+    });
+  }, [cartService]);
+  return <h1>1gd</h1>;
 };
 export default Cart;

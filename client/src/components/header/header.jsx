@@ -27,6 +27,9 @@ const Header = memo(({ username, onLogout }) => {
           </Link>
         </>
       )}
+      <Link to="/cart">
+        <button>찜목록</button>
+      </Link>
     </header>
   );
 });

@@ -7,6 +7,7 @@ import {AuthErrorEventBus, fetchCsrfToken} from './context/AuthContext';
 import { BrowserRouter } from 'react-router-dom';
 import HttpClient from './network/http';
 import ProductService from './service/product';
+import CartService from './service/cart';
 import ImageUploader from './service/image_uploader';
 import ImageFileInput from './components/image_file_input/image_file_input';
 import {Provider} from 'react-redux'
@@ -21,6 +22,7 @@ const authErrorEventBus = new AuthErrorEventBus();
 const httpClient = new HttpClient(baseURL, authErrorEventBus, () => fetchCsrfToken());
 const authService = new AuthService(httpClient);
 const productService = new ProductService(httpClient);
+const cartService = new CartService(httpClient);
 const imageUploader = new ImageUploader();
 
 const FileInput = props => (
@@ -32,8 +34,7 @@ ReactDOM.render(
     <Provider store={store}>
      <PersistGate persistor={persistor}>
     <BrowserRouter>
-   
-      <App productService = {productService} authService={authService}
+      <App productService = {productService} cartService = {cartService} authService={authService}
           authErrorEventBus={authErrorEventBus}
       FileInput = {FileInput}/>
     </BrowserRouter> 

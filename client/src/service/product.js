@@ -32,8 +32,9 @@ export default class ProductService {
       });
     }
   
-    async updateProduct(product) {
-      const {id, name, price, description, producturl}= product;
+    async updateProduct(product, producturl) {
+      const {id, name, price, description}= product;
+      
       
       console.log('업데이트 실행');
       return this.http.fetch(`/products/${id}`, {

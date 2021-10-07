@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import Products from "../products/products";
 
-const Home = memo(({ productService, username, FileInput, product_id }) => {
+const Home = memo(({ productService, cartService, FileInput, product_id }) => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
   const Delete = productId =>
@@ -40,6 +40,7 @@ const Home = memo(({ productService, username, FileInput, product_id }) => {
       {products.map(product => (
         <Products
           productService={productService}
+          cartService={cartService}
           FileInput={FileInput}
           key={product.id}
           product={product}

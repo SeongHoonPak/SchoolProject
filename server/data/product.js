@@ -26,6 +26,19 @@ let products = [
       {
           "fileurls": "http://res.cloudinary.com/dyhlgmuki/image/upload/v1633506336/fngwpye1jlyifbfukcnu.jpg"}
   ],},
+  {
+    id: "3",
+    productname: "상품2",
+    price: "20000",
+    createdAt: new Date().toString(),
+    description: "3번상품입니다",
+    userId: '2',
+    producturl: [  
+      {
+        fileurls: "http://res.cloudinary.com/dyhlgmuki/image/upload/v1633506336/fngwpye1jlyifbfukcnu.jpg"},
+      {
+          "fileurls": "http://res.cloudinary.com/dyhlgmuki/image/upload/v1633506336/fngwpye1jlyifbfukcnu.jpg"}
+  ],}
 ];
 
 export async function getAll() {
@@ -47,6 +60,7 @@ export async function getAllByUsername(username) {
 }
 
 export async function getById(id) {
+  console.log('체크',id);
   const found = products.find((product) => product.id === id);
   if (!found) {
     return null;

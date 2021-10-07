@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route } from "react-router-dom";
+import Cart from "./components/cart/cart";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
 import { AuthProvider } from "./context/AuthContext";
@@ -8,7 +9,13 @@ import { logoutAction } from "./modules/user";
 import ProductRegister from "./pages/ProductRegister";
 import ThisProducts from "./pages/ThisProducts";
 
-function App({ FileInput, productService, authErrorEventBus, authService }) {
+function App({
+  FileInput,
+  productService,
+  cartService,
+  authErrorEventBus,
+  authService,
+}) {
   const dispatch = useDispatch();
   const { username } = useSelector(state => ({
     username: state.user.username,
@@ -33,7 +40,10 @@ function App({ FileInput, productService, authErrorEventBus, authService }) {
         />
       </Route>
       <Route exact path="/:id">
-        <ThisProducts productService={productService} />
+        <ThisProducts
+          productService={productService}
+          cartService={cartService}
+        />
       </Route>
       <Route exact path="/productRegister">
         <AuthProvider
@@ -53,6 +63,15 @@ function App({ FileInput, productService, authErrorEventBus, authService }) {
           authErrorEventBus={authErrorEventBus}
           FileInput={FileInput}
         ></AuthProvider>
+      </Route>
+      <Route exact path="/cart">
+        <AuthProvider
+          authService={authService}
+          authErrorEventBus={authErrorEventBus}
+          FileInput={FileInput}
+        >
+          <Cart cartService={cartService} />
+        </AuthProvider>
       </Route>
     </>
   );

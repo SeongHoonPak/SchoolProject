@@ -1,17 +1,17 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import parseDate from "../../util/date";
 
 const Products = memo(
-  ({ product, onUsernameClick, Delete, productService }) => {
+  ({ product, onUsernameClick, Delete, productService, cartService }) => {
     const history = useHistory();
     const { usernamed } = useSelector(state => ({
       usernamed: state.user.username,
     }));
-    const { id, username, productname, producturl, url, createdAt, one } =
-      product;
+    const { id, username, productname, producturl, createdAt, one } = product;
     const path = "/" + id;
+    const [like, setLike] = useState(false);
     const onClickid = event => {
       productService
         .getProduct(id) // id에 맞는 상품 들고오기
@@ -33,11 +33,37 @@ const Products = memo(
         .getProducts(id) // id에 맞는 상품 들고오기
         .then(product => gotoProductadd(product));
     };
-    console.log(product);
+    const onClicklike = event => {
+      (like &&
+        cartService.deleteProduct(id).then(a => {
+          console.log("delete실행완료", a);
+          setLike(false);
+        })) ||
+        cartService.postProduct(id).then(a => {
+          console.log("post실행완료", a);
+          setLike(true);
+        });
+    };
+    useEffect(() => {
+      one &&
+        cartService.getProducts().then(a => {
+          a.map(product => product.cartproduct.id == id && setLike(true));
+        });
+    }, [cartService]);
     const owner = usernamed == username;
     return (
       <>
         <Link to={path}>
+          {one &&
+            ((like && (
+              <button className="tweet-action-btn" onClick={onClicklike}>
+                찜삭제
+              </button>
+            )) || (
+              <button className="tweet-action-btn" onClick={onClicklike}>
+                찜하기
+              </button>
+            ))}
           <li className="product">
             <section className="product-container">
               {/* <Avatar url={url} name={username} /> */}

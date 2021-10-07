@@ -7,13 +7,12 @@ const ProductRegister = ({ FileInput, productService }) => {
     : "";
   console.log("xzvavasv", historyState);
   const { id, productname, description, price, producturl } = historyState;
-  const [imgview, setImgview] = useState(producturl && producturl);
-  const [producturls, setProducturls] = useState([]);
+  const [producturls, setProducturls] = useState(producturl);
   const [error, setError] = useState("");
 
   const onFileChange = file => {
+    producturls == producturl && setProducturls([]);
     const fileurls = file.url;
-    setImgview();
     setProducturls(producturls => {
       return [...producturls, { fileurls }];
     });
@@ -22,7 +21,6 @@ const ProductRegister = ({ FileInput, productService }) => {
     id,
     description,
     price,
-    producturl,
     name: productname,
   });
 
@@ -31,9 +29,10 @@ const ProductRegister = ({ FileInput, productService }) => {
   console.log("ch", historyState);
   const onSubmit = async event => {
     event.preventDefault();
+
     historyState
       ? productService
-          .updateProduct(product)
+          .updateProduct(product, producturls)
           .then(() => {
             // setTimeout(refresh, 200);
             history.push("/");
@@ -78,13 +77,7 @@ const ProductRegister = ({ FileInput, productService }) => {
   };
   useEffect(() => {
     erroralert();
-    setProduct(product => {
-      return {
-        ...product,
-        producturl: producturls,
-      };
-    });
-  }, [error, producturls]);
+  }, [error]);
 
   return (
     <>
@@ -119,12 +112,9 @@ const ProductRegister = ({ FileInput, productService }) => {
         <FileInput type="text" onFileChange={onFileChange} />
 
         <p>등록 하려고 하는 이미지</p>
-        {imgview &&
-          imgview.map(url => {
-            return <img src={url.fileurls} />;
-          })}
-        {product.producturl &&
-          product.producturl.map(url => {
+
+        {producturls &&
+          producturls.map(url => {
             return <img src={url.fileurls} />;
           })}
 
