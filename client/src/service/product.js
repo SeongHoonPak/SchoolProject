@@ -16,12 +16,12 @@ export default class ProductService {
         method: 'GET',
       });
     }
-    async postProduct(product) {
+    async postProduct(product, producturls) {
       console.log('찍어볼게',product);
-      const {name, price, description, producturl}= product;
+      const {name, price, description}= product;
       return this.http.fetch(`/products`, {
         method: 'POST',
-        body: JSON.stringify({name, price, description, producturl}),
+        body: JSON.stringify({name, price, description, producturls}),
       });
     }
   

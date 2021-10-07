@@ -41,7 +41,7 @@ const ProductRegister = ({ FileInput, productService }) => {
           })
           .catch(setError)
       : productService
-          .postProduct(product)
+          .postProduct(product, producturls)
           .then(() => {
             // setTimeout(refresh, 200);
             history.push("/");

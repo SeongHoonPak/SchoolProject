@@ -20,10 +20,10 @@ export async function getProduct(req, res, next) {
 
 export async function createProduct(req, res, next) {
     console.log('생성하자');
-  const { name, price, description, producturl} = req.body;
+  const { name, price, description, producturls} = req.body;
   
   console.log('이름 업데이트',req.body,'으로')
-  const Product = await ProductRepository.create(name, price,description, producturl, req.userId);
+  const Product = await ProductRepository.create(name, price,description, producturls, req.userId);
   console.log('생성 반응')
   res.status(201).json(Product);
 }

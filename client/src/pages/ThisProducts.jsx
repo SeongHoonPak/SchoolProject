@@ -4,7 +4,6 @@ import Home from "../components/home/home";
 
 const ThisProducts = ({ productService, cartService }) => {
   const { id } = useParams();
-
   return (
     <Home
       productService={productService}

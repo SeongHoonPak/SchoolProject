@@ -71,7 +71,7 @@ export async function getById(id) {
 
 export async function create(name, price,description,producturl,userId) {
   const product = {
-    id: new Date().toString(),
+    id: new Date(),
     name,
     price,description,
     createdAt: new Date(),

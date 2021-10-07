@@ -17,6 +17,8 @@ const Products = memo(
         .getProduct(id) // id에 맞는 상품 들고오기
         .then(product => gotoProductadd(product));
     };
+
+    console.log("체크", product, "체크체크");
     const gotoProductadd = product => {
       history.push({
         pathname: "/productRegister",

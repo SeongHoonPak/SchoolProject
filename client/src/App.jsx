@@ -39,12 +39,7 @@ function App({
           FileInput={FileInput}
         />
       </Route>
-      <Route exact path="/:id">
-        <ThisProducts
-          productService={productService}
-          cartService={cartService}
-        />
-      </Route>
+
       <Route exact path="/productRegister">
         <AuthProvider
           authService={authService}
@@ -72,6 +67,12 @@ function App({
         >
           <Cart cartService={cartService} />
         </AuthProvider>
+      </Route>
+      <Route exact path="/:id">
+        <ThisProducts
+          productService={productService}
+          cartService={cartService}
+        />
       </Route>
     </>
   );

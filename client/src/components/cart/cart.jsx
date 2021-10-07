@@ -1,11 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import parseDate from "../../util/date";
 
 const Cart = ({ cartService }) => {
-  useEffect(() => {
-    cartService.getProducts().then(pr => {
-      console.log("data;;;", pr);
-    });
+  const [cartproduct, setCartProduct] = useState([]);
+  let pro = cartproduct.map(({ cartproduct }) => {
+    const path = "/" + cartproduct.id;
+    console.log(path);
+    return (
+      <>
+        <Link to={path}>
+          <p>상품 이름 : {cartproduct.productname}</p>
+          <span className="product-date">
+            {parseDate(cartproduct.createdAt)}
+          </span>
+          {cartproduct.producturl.map(url => {
+            return (
+              <img
+                key={Math.random()}
+                className="card-img-top"
+                src={url.fileurls}
+                alt="Card image cap"
+              />
+            );
+          })}
+        </Link>
+      </>
+    );
+  });
+  useEffect(async () => {
+    const product = await cartService.getProducts();
+    setCartProduct(product);
   }, [cartService]);
-  return <h1>1gd</h1>;
+  return <>{pro}</>;
 };
 export default Cart;
