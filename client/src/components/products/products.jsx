@@ -47,7 +47,8 @@ const Products = memo(
         });
     };
     useEffect(() => {
-      one &&
+      usernamed &&
+        one &&
         cartService.getProducts().then(a => {
           a.map(product => product.cartproduct.id == id && setLike(true));
         });
@@ -56,16 +57,18 @@ const Products = memo(
     return (
       <>
         <Link to={path}>
-          {one &&
-            ((like && (
-              <button className="tweet-action-btn" onClick={onClicklike}>
-                찜삭제
-              </button>
-            )) || (
-              <button className="tweet-action-btn" onClick={onClicklike}>
-                찜하기
-              </button>
-            ))}
+          {owner ||
+            (usernamed &&
+              one &&
+              ((like && (
+                <button className="tweet-action-btn" onClick={onClicklike}>
+                  찜삭제
+                </button>
+              )) || (
+                <button className="tweet-action-btn" onClick={onClicklike}>
+                  찜하기
+                </button>
+              )))}
           <li className="product">
             <section className="product-container">
               {/* <Avatar url={url} name={username} /> */}

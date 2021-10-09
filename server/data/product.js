@@ -28,8 +28,8 @@ let products = [
   ],},
   {
     id: "3",
-    productname: "상품2",
-    price: "20000",
+    productname: "상품3",
+    price: "30000",
     createdAt: new Date().toString(),
     description: "3번상품입니다",
     userId: '2',
