@@ -17,10 +17,15 @@ function App({
   authService,
 }) {
   const dispatch = useDispatch();
-  const { username } = useSelector(state => ({
+  const { username, time } = useSelector(state => ({
     username: state.user.username,
+    time: state.user.time,
   }));
+  const now = new Date();
+  const login = new Date(Date.parse(time));
+  console.log(Math.floor((now - login) / 1000), "초 전 로그인");
 
+  Math.floor((now - login) / 1000) > 3000 && dispatch(logoutAction());
   const onLogout = useCallback(async () => {
     if (window.confirm("정말 로그아웃 할거야?")) {
       await authService.logout();
@@ -28,7 +33,6 @@ function App({
       window.location.replace("/");
     }
   }, [authService]);
-
   return (
     <>
       <Header username={username} onLogout={onLogout} />

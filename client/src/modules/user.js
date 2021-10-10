@@ -20,6 +20,7 @@ export const loginAction = (requestData) => {
   const initialState = {
     username: null,
     isLoggedIn: false,
+    time:null
   };
   
   const user = (state = initialState, action) => {
@@ -28,13 +29,15 @@ export const loginAction = (requestData) => {
         return ({
           ...state,
           username: action.username,
-          isLoggedIn: true
+          isLoggedIn: true,
+      time: new Date()
         });
       case (LOGOUT_USER):
         return ({
           ...state,
           username: action.username,
-          isLoggedIn: false
+          isLoggedIn: false,
+      time:null
         });
       default:
         return state

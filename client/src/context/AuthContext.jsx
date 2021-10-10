@@ -5,9 +5,8 @@ import {
   useImperativeHandle,
   useState,
 } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useHistory } from "react-router";
 import { loginAction, logoutAction } from "../modules/user";
 import Login from "../pages/Login";
 
@@ -20,6 +19,9 @@ export function AuthProvider({
   children,
 }) {
   console.log("Auth 실행ㅎㄴ다");
+  const { usernamed } = useSelector(state => ({
+    usernamed: state.user.username,
+  }));
   const dispatch = useDispatch();
   const [user, setUser] = useState(undefined);
   const [csrfToken, setCsrfToken] = useState(undefined);
@@ -44,7 +46,6 @@ export function AuthProvider({
   const signUp = useCallback(
     async (username, password, name, email, url) =>
       authService.signup(username, password, name, email, url).then(user => {
-        setUser(user);
         dispatch(loginAction(user.username));
         window.location.replace("/");
       }),
@@ -54,26 +55,23 @@ export function AuthProvider({
   const logIn = useCallback(
     async (username, password) => {
       const user = await authService.login(username, password);
-      setUser(user);
       dispatch(loginAction(user.username));
       window.location.replace("/");
       // history.push("/");
     },
     [authService]
   );
-
-  // const logout = useCallback(async () => {
-  //   await authService.logout();
-  //   setUser(undefined);
-  //   dispatch(logoutAction());
-  //   history.push("/");
-  // }, [authService]);
+  const logout = useCallback(async () => {
+    await authService.logout();
+    dispatch(logoutAction());
+    // history.push("/");
+  }, [authService]);
 
   return (
     <>
       {
-        (console.log("유저체크", user),
-        user ? (
+        (console.log("유저체크", usernamed),
+        usernamed ? (
           children
         ) : (
           <div className="app">
