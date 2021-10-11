@@ -7,6 +7,7 @@ const Cart = ({ cartService }) => {
   let pro = cartproduct.map(({ cartproduct }) => {
     const path = "/" + cartproduct.id;
     console.log(path);
+    console.log("카트체크ㅏㅎㅂ니다,", cartproduct);
     return (
       <>
         <Link to={path}>

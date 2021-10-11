@@ -61,6 +61,7 @@ export async function getAllByUsername(username) {
 
 export async function getById(id) {
   console.log('체크',id);
+  console.log('확인',products);
   const found = products.find((product) => product.id === id);
   if (!found) {
     return null;

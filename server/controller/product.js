@@ -11,6 +11,7 @@ export async function getProducts(req, res) {
 export async function getProduct(req, res, next) {
   const id = req.params.id;
   const Product = await ProductRepository.getById(id);
+  console.log('getId 체크',Product);
   if (Product) {
     res.status(200).json(Product);
   } else {

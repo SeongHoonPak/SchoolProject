@@ -28,7 +28,7 @@ export async function create(userId, productId) {
     };
     cartproducts = [cartproduct, ...cartproducts];
     
-    return cartproducts;
+    return cartproduct;
     // getById(product.id)
   }
 
@@ -37,6 +37,7 @@ export async function create(userId, productId) {
    const products = await getAllById(id)
    return Promise.all(products.map(async (product) => {
     const cartproduct = await productRepository.getById(product.productId)
+    console.log('카트확인',cartproduct);
         return{cartproduct}
    }))
   }
