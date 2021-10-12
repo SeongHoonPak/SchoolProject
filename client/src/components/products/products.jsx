@@ -19,6 +19,10 @@ const Products = memo(
     };
 
     console.log("체크", product, "체크체크");
+    console.log("zz", producturl);
+    product.producturl.map(pro => {
+      console.log("producturl", pro);
+    });
     const gotoProductadd = product => {
       history.push({
         pathname: "/productRegister",

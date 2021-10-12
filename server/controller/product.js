@@ -46,8 +46,10 @@ export async function updateProduct(req, res, next) {
 }
 
 export async function removeProduct(req, res, next) {
+  console.log('삭제시도');
   const id = req.params.id;
   const Product = await ProductRepository.getById(id);
+  console.log('삭제 상품확인',Product);
   if (!Product) {
     return res.status(404).json({ message: `Product not found: ${id}` });
   }

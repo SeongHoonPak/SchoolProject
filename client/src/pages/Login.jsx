@@ -12,14 +12,12 @@ const Login = ({ onSignUp, onLogin, FileInput }) => {
 
   const onFileChange = file => {
     const fileurls = file.url;
-    setUrl(url => {
-      return [url];
-    });
   };
+  console.log("url c", url);
   const onSubmit = event => {
     event.preventDefault();
     if (signup) {
-      onSignUp(username, password, name, email, url).catch(setError);
+      onSignUp(username, password, name, email).catch(setError);
     } else {
       onLogin(username, password).catch(setError);
     }
@@ -90,12 +88,6 @@ const Login = ({ onSignUp, onLogin, FileInput }) => {
             className="form-input"
             required
           />
-        )}
-        {signup && (
-          <>
-            <h3>프로필 사진등록</h3>
-            <FileInput type="text" onFileChange={onFileChange} />
-          </>
         )}
 
         <div className="form-signup">

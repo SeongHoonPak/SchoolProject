@@ -13,7 +13,7 @@ export const isAuth = async (req, res, next) => {
    token = authHeader.split(' ')[1];
   }
   if(!token){
-    console.log("브라우저 쿠키 체크");
+    console.log("쿠키 체크");
     token = req.cookies['token'];  
   }
 

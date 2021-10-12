@@ -17,10 +17,7 @@ function App({
   authService,
 }) {
   const dispatch = useDispatch();
-  const { username, time } = useSelector(state => ({
-    username: state.user.username,
-    time: state.user.time,
-  }));
+
   const onLogout = useCallback(async () => {
     if (window.confirm("정말 로그아웃 할거야?")) {
       await authService.logout();
@@ -30,13 +27,9 @@ function App({
   }, [authService]);
   return (
     <>
-      <Header username={username} time={time} onLogout={onLogout} />
+      <Header onLogout={onLogout} />
       <Route exact path="/">
-        <Home
-          username={username}
-          productService={productService}
-          FileInput={FileInput}
-        />
+        <Home productService={productService} FileInput={FileInput} />
       </Route>
       <Switch>
         <Route exact path="/productRegister">

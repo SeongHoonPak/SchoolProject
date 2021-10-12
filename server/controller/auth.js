@@ -5,7 +5,7 @@ import * as userRepository from '../data/auth.js';
 import { config } from '../config.js';
 
 export async function signup(req, res) {
-  const { username, password, name, email, url } = req.body;
+  const { username, password, name, email} = req.body;
   const found = await userRepository.findByUsername(username);
   if (found) {
     return res.status(409).json({ message: `${username} already exists` });
@@ -16,7 +16,6 @@ export async function signup(req, res) {
     password: hashed,
     name,
     email,
-    url,
   });
   const token = createJwtToken(userId);
   setToken(res, token);
@@ -27,6 +26,7 @@ export async function login(req, res) {
   console.log('로그인',req);
   const { username, password } = req.body;
   const user = await userRepository.findByUsername(username);
+  console.log('contler login user',user);
   if (!user) {
     return res.status(401).json({ message: 'Invalid user or password' });
   }
