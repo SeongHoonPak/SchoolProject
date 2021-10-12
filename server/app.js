@@ -8,6 +8,7 @@ import cartRouter from './router/cart.js';
 import { config } from './config.js';
 import { csrfCheck } from './middleware/csrf.js';
 import rateLimit from './middleware/rate-limiter.js';
+import { db } from './db/database.js';
 
 
 const app = express();
@@ -29,5 +30,7 @@ app.use('/products', productRouter);
 
 app.use('/carts', cartRouter);
 
+
+db.getConnection().then(c => console.log(c));
 app.listen(config.port);
 console.log('시작');
