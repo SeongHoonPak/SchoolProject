@@ -6,7 +6,6 @@ import { db } from '../db/database.js';
     return db.execute('INSERT INTO carts (userId, productId) VALUES(?,?)',[userId, productId])
     .then(result =>
       console.log('aa',result) 
-      // getById(result[0].insertId)
       )
     }
 
@@ -18,11 +17,6 @@ import { db } from '../db/database.js';
      return {cartproduct}
    }))
    
-  //  return Promise.all(products.map(async (product) => {
-  //   const cartproduct = await productRepository.getById(product.productId)
-  //   console.log('카트확인',cartproduct,'확인 끝');
-  //       return{cartproduct}
-  //  }))
   }
   
   export async function getAllById(id) {
@@ -44,23 +38,6 @@ import { db } from '../db/database.js';
 
 
 
-// // const SELECT_JOIN = 'SELECT pro.id, pro.name, pro.price, pro.description, pro.producturl, pro.createdAt, us.id as userId, us.username FROM products as pro JOIN users as us ON cart.userId = us.id, cart.productId = pro.id '
-
-// // const ORDER_DESC = 'ORDER BY pro.createdAt DESC';
-// // export async function getAll() {
-// //   return db.execute(`${SELECT_JOIN} ${ORDER_DESC}`)
-// //   .then(result => result[0]);
-  
- 
-// // }
-
-// // export async function getAllByUsername(username) {
-// //   return db.execute(`${SELECT_JOIN} WHERE username=? ${ORDER_DESC}`,[username])
-// //   .then(result => result[0]);
- 
-// // }
-
-
 
 
 
@@ -69,27 +46,3 @@ import { db } from '../db/database.js';
 
 
   
-
-
-
-// export async function getAllByUserId(id) {
-//   const products = await getAllById(id)
-//   return Promise.all(products.map(async (product) => {
-//    const cartproduct = await productRepository.getById(product.productId)
-//    console.log('카트확인',cartproduct);
-//        return{cartproduct}
-//   }))
-//  }
- 
-
- 
- 
-//  export async function getById(id) {
-//    console.log('asd',id);
-//    return db.execute(`${SELECT_JOIN} WHERE pro.id=?`,[id])
-//    .then(result => result[0][0]);
-  
-//  }
- 
-
- 

@@ -9,21 +9,12 @@ const Products = memo(
     const { usernamed } = useSelector(state => ({
       usernamed: state.user.username,
     }));
-    const { id, username, productname, producturl, createdAt, one } = product;
+    const { id, username, name, producturl, createdAt, one } = product;
     const path = "/" + id;
     const [like, setLike] = useState(false);
-    const onClickid = event => {
-      productService
-        .getProduct(id) // id에 맞는 상품 들고오기
-        .then(product => gotoProductadd(product));
-    };
 
     console.log("체크", product, "체크체크");
-    console.log("zz", producturl);
-    product.producturl.map(pro => {
-      console.log("producturl", pro);
-    });
-    const gotoProductadd = product => {
+    const onClickid = () => {
       history.push({
         pathname: "/productRegister",
         state: { products: product },
@@ -34,10 +25,11 @@ const Products = memo(
         Delete(id);
       }
     }, []);
-    const onClick = event => {
-      productService
-        .getProducts(id) // id에 맞는 상품 들고오기
-        .then(product => gotoProductadd(product));
+    const onOrder = () => {
+      history.push({
+        pathname: "/order",
+        state: { products: id },
+      });
     };
     const onClicklike = event => {
       (like &&
@@ -50,11 +42,12 @@ const Products = memo(
           setLike(true);
         });
     };
+
     useEffect(() => {
       usernamed &&
         one &&
-        cartService.getProducts().then(a => {
-          a.map(product => product.cartproduct.id == id && setLike(true));
+        cartService.getProducts().then(product => {
+          product.map(product => product.cartproduct.id == id && setLike(true));
         });
     }, [cartService]);
     const owner = usernamed == username;
@@ -64,18 +57,11 @@ const Products = memo(
           {owner ||
             (usernamed &&
               one &&
-              ((like && (
-                <button className="tweet-action-btn" onClick={onClicklike}>
-                  찜삭제
-                </button>
-              )) || (
-                <button className="tweet-action-btn" onClick={onClicklike}>
-                  찜하기
-                </button>
+              ((like && <button onClick={onClicklike}>찜삭제</button>) || (
+                <button onClick={onClicklike}>찜하기</button>
               )))}
           <li className="product">
             <section className="product-container">
-              {/* <Avatar url={url} name={username} /> */}
               <div className="product-body">
                 <span
                   className="product-username"
@@ -94,21 +80,18 @@ const Products = memo(
                     />
                   );
                 })}
-                <p>{productname}</p>
-                {owner && one && (
-                  <div className="tweet-action">
-                    <button className="tweet-action-btn" onClick={onDelete}>
-                      x
-                    </button>
-                    <button className="tweet-action-btn" onClick={onClickid}>
-                      ✎
-                    </button>
-                  </div>
-                )}
+                <p>{name}</p>
               </div>
             </section>
           </li>
         </Link>
+        {owner && one && (
+          <div>
+            <button onClick={onDelete}>x</button>
+            <button onClick={onClickid}>✎</button>
+          </div>
+        )}
+        {owner || (one && <button onClick={onOrder}>하숙신청</button>)}
       </>
     );
   }

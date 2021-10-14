@@ -11,7 +11,7 @@ const Cart = ({ cartService }) => {
     return (
       <>
         <Link to={path}>
-          <p>상품 이름 : {cartproduct.productname}</p>
+          <p>상품 이름 : {cartproduct.name}</p>
           <span className="product-date">
             {parseDate(cartproduct.createdAt)}
           </span>

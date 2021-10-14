@@ -13,7 +13,7 @@ const Header = memo(({ onLogout }) => {
   const login = new Date(Date.parse(time));
   const timeend = 3000 - Math.floor((now - login) / 1000);
   Math.floor((now - login) / 1000) > 3000 && dispatch(logoutAction());
-  console.log(timeend);
+
   return (
     <header className="header">
       <div className="logo">

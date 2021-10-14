@@ -6,6 +6,7 @@ import Header from "./components/header/header";
 import Home from "./components/home/home";
 import { AuthProvider } from "./context/AuthContext";
 import { logoutAction } from "./modules/user";
+import Orderpage from "./pages/orderpage";
 import ProductRegister from "./pages/ProductRegister";
 import ThisProducts from "./pages/ThisProducts";
 
@@ -59,6 +60,9 @@ function App({
           >
             <Cart cartService={cartService} />
           </AuthProvider>
+        </Route>
+        <Route exact path="/order">
+          <Orderpage />
         </Route>
         <Route exact path="/:id">
           <ThisProducts
