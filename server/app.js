@@ -23,7 +23,7 @@ app.use(helmet())
 app.use(cors(corsOption));
 app.use(rateLimit);
 
-// app.use(csrfCheck)
+app.use(csrfCheck)
 app.use('/auth', authRouter);
 
 app.use('/products', productRouter);

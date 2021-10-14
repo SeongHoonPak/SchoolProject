@@ -24,14 +24,17 @@ export const isAuth = async (req, res, next) => {
   jwt.verify(
     token,
     config.jwt.secretKey,
+    console.log('jwt 인증확인'),
     async (error, decoded) => {
       if (error) {
+        console.log('에러 확인중',error);
         return res.status(401).json(AUTH_ERROR);
       }
       const user = await userRepository.findById(decoded.id);
       if (!user) {
         return res.status(401).json(AUTH_ERROR);
       }
+      console.log('계속 확인중',user);
       req.userId = user.id; //
       req.token = token
       next();

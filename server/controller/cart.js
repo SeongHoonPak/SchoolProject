@@ -29,6 +29,6 @@ export async function removeCart(req, res, next) {
       return res.status(404).json({ message: `Product not found: ${productId}` });
     }
     console.log('삭제합니다');
-    await CartRepository.remove(productId);
+    await CartRepository.remove(req.userId, productId);
     res.sendStatus(204);
 }
