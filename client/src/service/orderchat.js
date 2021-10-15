@@ -18,11 +18,11 @@ export default class OrderChatService {
         body: JSON.stringify({productId}),
       });
     }
-    async postChat(text,productId, orderId) {
+    async postChat(text,productId, orderId,connectId) {
       console.log('채팅생성');
         return this.http.fetch(`/chats`, {
           method: 'POST',
-          body: JSON.stringify({ text,productId, orderId }),
+          body: JSON.stringify({ text,productId, orderId,connectId }),
         });
       }
     async deleteProduct(ProductId) {
@@ -32,8 +32,8 @@ export default class OrderChatService {
       });
     }
   
-    onSync(callback) {
-        return this.socket.onSync('chats', callback);
+    onSync(callback,connectId) {
+        return this.socket.onSync(connectId, callback);
       }
     
   

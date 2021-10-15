@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
-const NewChat = ({ orderchatService, id, orderId }) => {
+const NewChat = ({ orderchatService, id, orderId, connectId }) => {
   const [chat, setChat] = useState("");
   const onSubmit = async event => {
     event.preventDefault();
-    orderchatService.postChat(chat, id, orderId).then(created => {
+    orderchatService.postChat(chat, id, orderId, connectId).then(created => {
       setChat("");
     });
     // .catch(onError);

@@ -11,15 +11,18 @@ const Order = ({ orderchatService }) => {
   );
   const history = useHistory();
   const { id, userId, username } = history.location.state.product;
-
+  const connectId = orderId;
   useEffect(() => {
     orderId &&
       orderchatService.getChat(orderId).then(chats => setChats([...chats]));
     // .catch(onError);
 
-    const stopSync = orderchatService.onSync(chat => onCreated(chat));
+    const stopSync = orderchatService.onSync(
+      chat => onCreated(chat),
+      connectId
+    );
     return () => stopSync();
-  }, [orderchatService]);
+  }, [orderchatService, orderId]);
 
   useEffect(() => {}, []);
   const onCreated = chat => {
@@ -45,7 +48,12 @@ const Order = ({ orderchatService }) => {
       <h1>하숙집 주인 정보 , {username}</h1>
       {(chatmode && (
         <>
-          <Chat orderchatService={orderchatService} id={id} orderId={orderId} />
+          <Chat
+            orderchatService={orderchatService}
+            connectId={connectId}
+            id={id}
+            orderId={orderId}
+          />
           {chats.map(chat => {
             return (
               <>
