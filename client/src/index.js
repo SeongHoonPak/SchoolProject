@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import AuthService from './service/auth';
-import {AuthErrorEventBus, fetchCsrfToken} from './context/AuthContext';
+import {AuthErrorEventBus, fetchCsrfToken, fetchToken} from './context/AuthContext';
 import { BrowserRouter } from 'react-router-dom';
 import HttpClient from './network/http';
 import ProductService from './service/product';
@@ -16,6 +16,8 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';	
 import persistedReducer from './modules';
+import OrderChatService from './service/orderchat';
+import Socket from './network/socket';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 const authErrorEventBus = new AuthErrorEventBus();
@@ -24,6 +26,9 @@ const authService = new AuthService(httpClient);
 const productService = new ProductService(httpClient);
 const cartService = new CartService(httpClient);
 const imageUploader = new ImageUploader();
+const socketClient = new Socket(baseURL, () => fetchToken());
+const orderchatService = new OrderChatService(httpClient, socketClient);
+
 
 const FileInput = props => (
   <ImageFileInput {...props} imageUploader = {imageUploader}/>
@@ -35,7 +40,7 @@ ReactDOM.render(
      <PersistGate persistor={persistor}>
     <BrowserRouter>
       <App productService = {productService} cartService = {cartService} authService={authService}
-          authErrorEventBus={authErrorEventBus}
+          orderchatService = {orderchatService} authErrorEventBus={authErrorEventBus} 
       FileInput = {FileInput}/>
     </BrowserRouter> 
     </PersistGate>	

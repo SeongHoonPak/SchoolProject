@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginAction, logoutAction } from "../modules/user";
 import Login from "../pages/Login";
 
+const tokenRef = createRef();
 const csrfRef = createRef();
 
 export function AuthProvider({
@@ -25,7 +26,7 @@ export function AuthProvider({
   const dispatch = useDispatch();
   const [user, setUser] = useState(undefined);
   const [csrfToken, setCsrfToken] = useState(undefined);
-  // useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
+  useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
   useImperativeHandle(csrfRef, () => csrfToken);
   useEffect(() => {
     authErrorEventBus.listen(err => {
@@ -91,4 +92,5 @@ export class AuthErrorEventBus {
     this.callback(error);
   }
 }
+export const fetchToken = () => tokenRef.current;
 export const fetchCsrfToken = () => csrfRef.current;

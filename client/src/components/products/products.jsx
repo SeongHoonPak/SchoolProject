@@ -25,10 +25,11 @@ const Products = memo(
         Delete(id);
       }
     }, []);
+
     const onOrder = () => {
       history.push({
         pathname: "/order",
-        state: { products: id },
+        state: { product },
       });
     };
     const onClicklike = event => {

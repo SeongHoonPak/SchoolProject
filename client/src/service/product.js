@@ -25,6 +25,8 @@ export default class ProductService {
       });
     }
   
+
+
     async deleteProduct(ProductId) {
       console.log('삭제 실행');
       return this.http.fetch(`/products/${ProductId}`, {

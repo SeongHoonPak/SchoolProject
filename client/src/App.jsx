@@ -4,9 +4,9 @@ import { Route, Switch } from "react-router-dom";
 import Cart from "./components/cart/cart";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
+import Order from "./components/orderchat/order";
 import { AuthProvider } from "./context/AuthContext";
 import { logoutAction } from "./modules/user";
-import Orderpage from "./pages/orderpage";
 import ProductRegister from "./pages/ProductRegister";
 import ThisProducts from "./pages/ThisProducts";
 
@@ -16,6 +16,7 @@ function App({
   cartService,
   authErrorEventBus,
   authService,
+  orderchatService,
 }) {
   const dispatch = useDispatch();
 
@@ -62,7 +63,13 @@ function App({
           </AuthProvider>
         </Route>
         <Route exact path="/order">
-          <Orderpage />
+          <AuthProvider
+            authService={authService}
+            authErrorEventBus={authErrorEventBus}
+            FileInput={FileInput}
+          >
+            <Order orderchatService={orderchatService} />
+          </AuthProvider>
         </Route>
         <Route exact path="/:id">
           <ThisProducts
