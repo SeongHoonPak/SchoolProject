@@ -5,6 +5,7 @@ import helmet from'helmet';
 import authRouter from './router/auth.js';
 import productRouter from './router/product.js';
 import cartRouter from './router/cart.js';
+import orderRouter from './router/order.js';
 import { config } from './config.js';
 import { csrfCheck } from './middleware/csrf.js';
 import rateLimit from './middleware/rate-limiter.js';
@@ -29,6 +30,8 @@ app.use('/auth', authRouter);
 app.use('/products', productRouter);
 
 app.use('/carts', cartRouter);
+
+app.use('/orders', orderRouter)
 
 
 db.getConnection().then(c => console.log(c));

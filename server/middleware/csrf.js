@@ -11,14 +11,13 @@ export const csrfCheck = (req, res, next) => {
   ) {
     return next();
   }
-console.log('czcz',req.originalUrl)
   const csrfHeader = req.get('school-csrf-token');
 
   if (!csrfHeader) {
     console.warn('Missing required "school-csrf-token" header.', req.headers.origin);
     return res.status(403).json({ message: 'Failed CSRF check' });
   }
-
+  console.log(csrfHeader,'csrfHeader체크');
   validateCsrfToken(csrfHeader)
     .then((valid) => {
       if (!valid) {
