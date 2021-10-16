@@ -10,8 +10,6 @@ import chatRouter from './router/chat.js';
 import { config } from './config.js';
 import { csrfCheck } from './middleware/csrf.js';
 import rateLimit from './middleware/rate-limiter.js';
-import { db } from './db/database.js';
-import { initSocket } from './connection/socket.js';
 
 const app = express();
 const corsOption = {
@@ -37,6 +35,7 @@ app.use('/orders', orderRouter)
 app.use('/chats', chatRouter)
 
 const server = app.listen(config.port);
-initSocket(server)
+export default server;
 
 console.log('시작');
+

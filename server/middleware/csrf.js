@@ -2,8 +2,9 @@ import { config } from '../config.js';
 import bcrypt from 'bcrypt';
 
 export const csrfCheck = (req, res, next) => {
+  console.log('url check!!!',req.originalUrl);
   if (
-    req.method === 'GET' ||
+    (req.originalUrl === '/chats' || req.method === 'GET') ||
     req.method === 'OPTIONS' ||
     req.method === 'HEAD' ||
     req.originalUrl === '/auth/logout' ||

@@ -18,7 +18,8 @@ const validateProduct = [
     .withMessage('금액이 너무 높습니다'),
   ];
 
-// router.get('/', productController.getProducts);
+router.get('/:id', orderController.getChat);
+
 
 
 router.post('/', isAuth, orderController.createOrder)

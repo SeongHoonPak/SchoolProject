@@ -21,11 +21,13 @@ const validateProduct = [
 // router.get('/', productController.getProducts);
 
 
-router.get('/:id', chatController.getChat);
+router.get('/:id', isAuth, chatController.getChat);
 
+router.get('/owner', isAuth, chatController.getOwner);
 
 router.post('/', isAuth, chatController.createChat)
 
+router.post('/:id', isAuth, chatController.openChat)
 
 // router.put('/:id',  isAuth, validateProduct, productController.updateProduct)
 
