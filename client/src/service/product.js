@@ -5,6 +5,7 @@ export default class ProductService {
   
     async getProducts(username) {
       const query = username ? `?username=${username}` : '';
+      console.log(query);
       return this.http.fetch(`/products${query}`, {
         method: 'GET',
       });
@@ -45,7 +46,14 @@ export default class ProductService {
       });
     }
     
-  
+
+  async getChatProduct(product_id) {
+      let query = product_id & `${product_id}` 
+      // query = seller_id ?  seller_id : '';
+      return this.http.fetch(`/products/${query}`, {
+        method: 'GET',
+      });
+    }
   
   }
   

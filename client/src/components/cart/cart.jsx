@@ -5,7 +5,7 @@ import parseDate from "../../util/date";
 const Cart = ({ cartService }) => {
   const [cartproduct, setCartProduct] = useState([]);
   let pro = cartproduct.map(({ cartproduct }) => {
-    const path = "/" + cartproduct.id;
+    const path = "/product/" + cartproduct.id;
     console.log(path);
     console.log("카트체크ㅏㅎㅂ니다,", cartproduct);
     return (

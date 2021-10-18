@@ -10,7 +10,7 @@ export async function getChat(req, res, next) {
     console.log('getzzz');
     const id = req.params.id;
     console.log('id chz',id)
-    const chat = await chatRepository.getByChatId(id,req.userId);
+    const chat = await chatRepository.getByChatId(id);
     console.log('chatch',chat);
     res.status(200).json(chat)
      

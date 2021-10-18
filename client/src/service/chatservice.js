@@ -1,4 +1,4 @@
-export default class OrderChatService {
+export default class ChatService {
     constructor(http, socket) {
       this.http = http;
       this.socket = socket;
@@ -9,20 +9,21 @@ export default class OrderChatService {
           method: 'GET',
         });
       }
+     
+    async postopenChat(orderId) {
+      console.log('openChat 시도',orderId, `/chats/${orderId}`);
+      console.log('cc',this.http)
+        return this.http.fetch(`/chats/${orderId}`, {
+          method: 'POST',
+          body: JSON.stringify({orderId}),
+        });
+      }
   
-  
-    async postOrder(productId) {
-      console.log('ORDER 찍어볼게',productId);
-      return this.http.fetch(`/orders`, {
-        method: 'POST',
-        body: JSON.stringify({productId}),
-      });
-    }
-    async postChat(text,productId, orderId,connectId) {
+    async postChat(text,productId, orderId) {
       console.log('채팅생성');
         return this.http.fetch(`/chats`, {
           method: 'POST',
-          body: JSON.stringify({ text,productId, orderId,connectId }),
+          body: JSON.stringify({ text,productId, orderId }),
         });
       }
     async deleteProduct(ProductId) {

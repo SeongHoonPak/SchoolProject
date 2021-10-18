@@ -2,11 +2,14 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import Cart from "./components/cart/cart";
+import Chat from "./components/chat/chat";
+import Chatlist from "./components/chatlist/chatlist";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
-import Order from "./components/orderchat/order";
+import Order from "./components/order/order";
 import { AuthProvider } from "./context/AuthContext";
 import { logoutAction } from "./modules/user";
+import MyProducts from "./pages/MyProduct";
 import ProductRegister from "./pages/ProductRegister";
 import ThisProducts from "./pages/ThisProducts";
 
@@ -16,10 +19,14 @@ function App({
   cartService,
   authErrorEventBus,
   authService,
-  orderchatService,
+  orderService,
+  httpClient,
 }) {
+  const { username, time } = useSelector(state => ({
+    username: state.user.username,
+    time: state.user.time,
+  }));
   const dispatch = useDispatch();
-
   const onLogout = useCallback(async () => {
     if (window.confirm("정말 로그아웃 할거야?")) {
       await authService.logout();
@@ -29,7 +36,7 @@ function App({
   }, [authService]);
   return (
     <>
-      <Header onLogout={onLogout} />
+      <Header onLogout={onLogout} username={username} time={time} />
       <Route exact path="/">
         <Home productService={productService} FileInput={FileInput} />
       </Route>
@@ -62,20 +69,45 @@ function App({
             <Cart cartService={cartService} />
           </AuthProvider>
         </Route>
+        <Route exact path="/chatlist">
+          <AuthProvider
+            authService={authService}
+            authErrorEventBus={authErrorEventBus}
+            FileInput={FileInput}
+          >
+            <Chatlist
+              username={username}
+              orderService={orderService}
+              productService={productService}
+            />
+          </AuthProvider>
+        </Route>
         <Route exact path="/order">
           <AuthProvider
             authService={authService}
             authErrorEventBus={authErrorEventBus}
             FileInput={FileInput}
           >
-            <Order orderchatService={orderchatService} />
+            <Order orderService={orderService} httpClient={httpClient} />
           </AuthProvider>
         </Route>
-        <Route exact path="/:id">
+        <Route exact path="/chat/:id">
+          <AuthProvider
+            authService={authService}
+            authErrorEventBus={authErrorEventBus}
+            FileInput={FileInput}
+          >
+            <Chat httpClient={httpClient} />
+          </AuthProvider>
+        </Route>
+        <Route exact path="/product/:id">
           <ThisProducts
             productService={productService}
             cartService={cartService}
           />
+        </Route>
+        <Route exact path="/:username">
+          <MyProducts productService={productService} />
         </Route>
       </Switch>
     </>

@@ -11,15 +11,25 @@ export async function getChat(req, res, next) {
    
 }
 
+export async function getbuyOrder(req, res, next) {
 
-
+  const chat = await OrderRepository.getbuyerChat(req.userId);
+  console.log('buyerOrder Check',chat);
+  res.status(200).json(chat)
+   
+}
 export async function createOrder(req, res, next) {
-    console.log('오더 생성하자');
+  console.log('order check?')
   const { productId} = req.body;
-  
+  const check = await OrderRepository.getCheckChat(productId, req.userId)
+  console.log(check,'체크확인')
+  if(check){
+    res.status(201).json(check.id)
+  }else{
   const Product = await OrderRepository.create(productId, req.userId);
   
   res.status(201).json(Product);
+  }
 }
 
 export async function removeOrder(req, res, next) {

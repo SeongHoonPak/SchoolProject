@@ -16,8 +16,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';	
 import persistedReducer from './modules';
-import OrderChatService from './service/orderchat';
-import Socket from './network/socket';
+import OrderService from './service/orderservice';
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 const authErrorEventBus = new AuthErrorEventBus();
@@ -25,9 +24,9 @@ const httpClient = new HttpClient(baseURL, authErrorEventBus, () => fetchCsrfTok
 const authService = new AuthService(httpClient);
 const productService = new ProductService(httpClient);
 const cartService = new CartService(httpClient);
+const orderService = new OrderService(httpClient);
+  
 const imageUploader = new ImageUploader();
-const socketClient = new Socket(baseURL, () => fetchToken());
-const orderchatService = new OrderChatService(httpClient, socketClient);
 
 
 const FileInput = props => (
@@ -40,7 +39,8 @@ ReactDOM.render(
      <PersistGate persistor={persistor}>
     <BrowserRouter>
       <App productService = {productService} cartService = {cartService} authService={authService}
-          orderchatService = {orderchatService} authErrorEventBus={authErrorEventBus} 
+          orderService = {orderService} 
+          authErrorEventBus={authErrorEventBus} httpClient = {httpClient}
       FileInput = {FileInput}/>
     </BrowserRouter> 
     </PersistGate>	

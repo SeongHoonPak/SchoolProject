@@ -3,29 +3,39 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { loginAction, logoutAction } from "../../modules/user";
 
-const Header = memo(({ onLogout }) => {
+const Header = memo(({ onLogout, username, time }) => {
   const dispatch = useDispatch();
-  const { username, time } = useSelector(state => ({
-    username: state.user.username,
-    time: state.user.time,
-  }));
+  // const { username, time } = useSelector(state => ({
+  //   username: state.user.username,
+  //   time: state.user.time,
+  // }));
   const now = new Date();
   const login = new Date(Date.parse(time));
   const timeend = 3000 - Math.floor((now - login) / 1000);
   Math.floor((now - login) / 1000) > 3000 && dispatch(logoutAction());
+  const path = `/${username}`;
 
   return (
     <header className="header">
       <div className="logo">
         <img src="./img/img.jpg" alt="Home Logo" className="logo-img" />
-        <h1 className="logo-name">하방</h1>
+        <h1>
+          <Link to="/">하방</Link>
+        </h1>
+
         {timeend < 300 && <> 곧 자동로그아웃됩니다.</>}
         {username && (
           <span className="logo-user">[{username}]님 환영합니다 </span>
         )}
       </div>
+      <Link to={path}>
+        <button>내상품</button>
+      </Link>
       <Link to="/productRegister">
         <button>상품등록하기</button>
+      </Link>
+      <Link to="/chatlist">
+        <button>내 채팅</button>
       </Link>
       {(username && (
         <nav className="menu">

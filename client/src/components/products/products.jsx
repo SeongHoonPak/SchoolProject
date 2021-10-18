@@ -4,13 +4,21 @@ import { Link, useHistory } from "react-router-dom";
 import parseDate from "../../util/date";
 
 const Products = memo(
-  ({ product, onUsernameClick, Delete, productService, cartService }) => {
+  ({
+    product,
+    onUsernameClick,
+    prousername,
+    Delete,
+    productService,
+    cartService,
+    nameproduct,
+  }) => {
     const history = useHistory();
     const { usernamed } = useSelector(state => ({
       usernamed: state.user.username,
     }));
     const { id, username, name, producturl, createdAt, one } = product;
-    const path = "/" + id;
+    const path = "/product/" + id;
     const [like, setLike] = useState(false);
 
     console.log("체크", product, "체크체크");
@@ -64,13 +72,6 @@ const Products = memo(
           <li className="product">
             <section className="product-container">
               <div className="product-body">
-                <span
-                  className="product-username"
-                  onClick={() => onUsernameClick(product)}
-                >
-                  @{username}
-                </span>
-                <span className="product-date"> · {parseDate(createdAt)}</span>
                 {producturl.map(url => {
                   return (
                     <img
@@ -81,11 +82,19 @@ const Products = memo(
                     />
                   );
                 })}
-                <p>{name}</p>
               </div>
             </section>
           </li>
         </Link>
+        <span
+          className="product-username"
+          onClick={() => onUsernameClick(product)}
+        >
+          @{username}
+        </span>
+        <span className="product-date"> · {parseDate(createdAt)}</span>
+
+        <p>{name}</p>
         {owner && one && (
           <div>
             <button onClick={onDelete}>x</button>

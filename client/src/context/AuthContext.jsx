@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 import { loginAction, logoutAction } from "../modules/user";
 import Login from "../pages/Login";
@@ -24,6 +25,7 @@ export function AuthProvider({
     usernamed: state.user.username,
   }));
   const dispatch = useDispatch();
+  const history = useHistory("");
   const [user, setUser] = useState(undefined);
   const [csrfToken, setCsrfToken] = useState(undefined);
   useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
@@ -56,9 +58,10 @@ export function AuthProvider({
   const logIn = useCallback(
     async (username, password) => {
       const user = await authService.login(username, password);
+      console.log("로그인 유저 체크", user);
       dispatch(loginAction(user.username));
-      window.location.replace("/");
-      // history.push("/");
+      // window.location.replace("/");
+      history.push("/");
     },
     [authService]
   );

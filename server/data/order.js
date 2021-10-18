@@ -9,6 +9,19 @@ export async function getChatProduct(id) {
    );
 }
 
+export async function getCheckChat(productId, userId) {
+  return db.execute('SELECT id FROM orders WHERE orders.productId =? AND orders.userId =?',[productId,userId]).then(result=> 
+    result[0][0]  
+   );
+}
+
+export async function getbuyerChat(id) {
+  console.log('buyerOrder check',id);
+  // DISTINCT userId
+  return db.execute('SELECT id, productId FROM orders WHERE orders.userId =?',[id]).then(result=> 
+    result[0]  
+   );
+}
 export async function create(productId, userId) {
     console.log('오더 생성시도',productId, userId);
     return db.execute('INSERT INTO orders (productId, userId, createdAt) VALUES(?,?,?)',[productId, userId, new Date])
