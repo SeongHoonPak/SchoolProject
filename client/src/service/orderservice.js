@@ -10,8 +10,8 @@ export default class OrderService {
       });
     }
     
-      async getOrder(id) { 
-        return this.http.fetch('/orders/'+id, {
+      async getOrder() { 
+        return this.http.fetch('/orders/chat', {
           method: 'GET',
         });
       }

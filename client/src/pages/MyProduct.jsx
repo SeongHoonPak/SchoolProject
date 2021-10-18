@@ -7,6 +7,8 @@ const MyProducts = ({ productService }) => {
   console.log("username??????", username);
   return (
     <>
+      <h1>회원정보 : {username}</h1>
+      <h2>별점 - </h2>
       <Home
         productService={productService}
         username={username}

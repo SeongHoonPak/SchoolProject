@@ -17,7 +17,7 @@ const Products = memo(
     const { usernamed } = useSelector(state => ({
       usernamed: state.user.username,
     }));
-    const { id, username, name, producturl, createdAt, one } = product;
+    const { id, username, name, producturl, createdAt, area, one } = product;
     const path = "/product/" + id;
     const [like, setLike] = useState(false);
 
@@ -55,8 +55,8 @@ const Products = memo(
     useEffect(() => {
       usernamed &&
         one &&
-        cartService.getProducts().then(product => {
-          product.map(product => product.cartproduct.id == id && setLike(true));
+        cartService.getProducts().then(products => {
+          products.map(product => product.id == id && setLike(true));
         });
     }, [cartService]);
     const owner = usernamed == username;
@@ -94,7 +94,9 @@ const Products = memo(
         </span>
         <span className="product-date"> · {parseDate(createdAt)}</span>
 
-        <p>{name}</p>
+        <p>
+          {name} - 거래지역 : {area}
+        </p>
         {owner && one && (
           <div>
             <button onClick={onDelete}>x</button>

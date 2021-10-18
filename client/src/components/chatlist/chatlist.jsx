@@ -20,19 +20,16 @@ const Chatlist = ({
 
   const onClick = e => {
     const values = e.target.attributes;
-
+    console.log("chhgg", values);
     history.push({
       pathname: `/chat/${values[0].value}`,
       state: { orderId: values[0].value, id: values[1].value, owner: true },
     });
   };
-  console.log("chat list?", chatlist);
+  console.log("chat list?", chatlist[0]);
   useEffect(async () => {
-    const products = await productService.getProducts(username);
-    products.map(product => {
-      orderService.getOrder(product.id).then(result => {
-        setChatList(chatlist => [...chatlist, result]);
-      });
+    orderService.getOrder().then(result => {
+      setChatList([result]);
     });
     const seller = await orderService.getSellOrder();
     setSeller(seller);
@@ -58,13 +55,17 @@ const Chatlist = ({
       {chatlist[0] &&
         chatlist[0].map(list => {
           return (
-            <button
-              onClick={onClick}
-              orderId={list.id}
-              productId={list.productId}
-            >
-              {list.id}
-            </button>
+            <>
+              <span>상품 이름 - {list.name} -</span>
+              <button
+                onClick={onClick}
+                orderId={list.id}
+                productId={list.productId}
+              >
+                채팅방 - {list.id}
+              </button>
+              <hr />
+            </>
           );
         })}
     </>

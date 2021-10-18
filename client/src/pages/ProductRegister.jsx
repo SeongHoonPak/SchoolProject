@@ -6,7 +6,8 @@ const ProductRegister = ({ FileInput, productService }) => {
     ? history.location.state.products
     : "";
   console.log("xzvavasv", historyState);
-  const { id, productname, description, price, producturl } = historyState;
+  const { id, productname, description, price, area, producturl } =
+    historyState;
   const [producturls, setProducturls] = useState(producturl);
   const [error, setError] = useState("");
 
@@ -22,6 +23,7 @@ const ProductRegister = ({ FileInput, productService }) => {
     description,
     price,
     name: productname,
+    area,
   });
 
   console.log("ch", product);
@@ -30,26 +32,26 @@ const ProductRegister = ({ FileInput, productService }) => {
   const onSubmit = async event => {
     event.preventDefault();
 
-    historyState
-      ? productService
-          .updateProduct(product, producturls)
-          .then(() => {
-            // setTimeout(refresh, 200);
-            history.push("/");
-            console.log("업데이트 실행");
-            // window.location.replace("/");
-          })
-          .catch(setError)
-      : productService
-          .postProduct(product, producturls)
-          .then(() => {
-            // setTimeout(refresh, 200);
-            history.push("/");
+    (historyState &&
+      productService
+        .updateProduct(product, producturls)
+        .then(() => {
+          // setTimeout(refresh, 200);
+          history.push("/");
+          console.log("업데이트 실행");
+          // window.location.replace("/");
+        })
+        .catch(setError)) ||
+      productService
+        .postProduct(product, producturls)
+        .then(() => {
+          // setTimeout(refresh, 200);
+          history.push("/");
 
-            console.log("포스트 실행");
-            // window.location.replace("/");
-          })
-          .catch(setError);
+          console.log("포스트 실행");
+          // window.location.replace("/");
+        })
+        .catch(setError);
   };
 
   // const erroralert = () => {
@@ -68,6 +70,8 @@ const ProductRegister = ({ FileInput, productService }) => {
       case "price":
         return setProduct({ ...product, [name]: value });
       case "description":
+        return setProduct({ ...product, [name]: value });
+      case "area":
         return setProduct({ ...product, [name]: value });
       default:
     }
@@ -106,6 +110,14 @@ const ProductRegister = ({ FileInput, productService }) => {
           type="text"
           placeholder="Edit product description"
           value={product.description}
+          required
+          onChange={onChange}
+        />
+        <input
+          name="area"
+          type="text"
+          placeholder="Edit product area"
+          value={product.area}
           required
           onChange={onChange}
         />
