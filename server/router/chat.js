@@ -18,20 +18,12 @@ const validateProduct = [
     .withMessage('금액이 너무 높습니다'),
   ];
 
-// router.get('/', productController.getProducts);
-
-
 router.get('/:id', isAuth, chatController.getChat);
 
-router.get('/owner', isAuth, chatController.getOwner);
 
 router.post('/', isAuth, chatController.createChat)
 
 router.post('/:id', isAuth, chatController.openChat)
 
-// router.put('/:id',  isAuth, validateProduct, productController.updateProduct)
-
-
-// router.delete('/:id', isAuth ,productController.removeProduct)
 
 export default router;

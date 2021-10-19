@@ -10,23 +10,14 @@ import { db } from '../db/database.js';
     }
 
   
-  export async function getAllByUserId(id) {
-   const products = await getAllById(id)
-   return Promise.all(products.map(async product => {
-     const cartproduct = await productRepository.getById(product.productId)
-     return {cartproduct}
-   }))
-   
-  }
-  
   export async function getAllById(id) {
-      console.log('id chdck',id);
-    return  db
-    .execute('SELECT productId FROM carts WHERE userId=?', [id])
+    console.log('userId 체크',id);
+    return db
+    .execute('SELECT * FROM carts JOIN products ON carts.userId=? AND carts.productId = products.id', [id])
     .then(result => result[0])
-
+    
   }
-  
+ 
   export async function remove(userId, productId) {
     console.log('삭제할게요',userId, productId);
     return db.execute('DELETE FROM carts WHERE userId=? AND productId=?',[userId, productId])

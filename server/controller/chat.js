@@ -9,6 +9,7 @@ import * as chatRepository from '../data/Chat.js';
 export async function getChat(req, res, next) {
     console.log('getzzz');
     const id = req.params.id;
+    
     console.log('id chz',id)
     const chat = await chatRepository.getByChatId(id);
     console.log('chatch',chat);
@@ -16,13 +17,6 @@ export async function getChat(req, res, next) {
      
   }
 
-  export async function getOwner(req, res, next) {
-    console.log('owner');
-    const chat = await chatRepository.getOwner(req.userId);
-    console.log('chatch',chat);
-    res.status(200).json(chat)
-     
-  }
 
 
   export async function openChat(req, res, next) {
@@ -39,11 +33,10 @@ export async function getChat(req, res, next) {
 
 export async function createChat(req, res, next) {
     console.log("채팅생성시도")
-    const { text,productId, orderId } = req.body;
-    console.log(text,productId, orderId)
-    const chat = await chatRepository.create(text,productId, orderId, req.userId);
-    res.status(201).json(chat);
+    const { text,orderId } = req.body;
+    const chat = await chatRepository.create(text,req.userId,orderId);
     console.log('이거보낸다',chat);
-    console.log('connectId?',orderId);
+    
+    res.status(201).json(chat);
     getSocketIO().emit(orderId, chat);
   }

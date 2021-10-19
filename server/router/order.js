@@ -21,7 +21,7 @@ const validateProduct = [
 
 router.get('/', isAuth, orderController.getbuyOrder);
 
-router.get('/:id', orderController.getChat);
+router.get('/chat',isAuth, orderController.getChat);
 
 
 

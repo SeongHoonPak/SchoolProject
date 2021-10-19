@@ -31,7 +31,7 @@ class Socket {
 
     this.io.on('connection', (socket) => {
       console.log('Socket client connected');
-      getSocketIO().emit(connectId, "채팅방 개설이 완료되었습니다.");
+      getSocketIO().emit(connectId, "상대방과 연결되었습니다.");
       
       });
   }

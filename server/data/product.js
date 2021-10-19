@@ -3,7 +3,7 @@ import * as userRepository from './auth.js';
 
 
 const SELECT_JOIN = 
-'SELECT pro.id, pro.name, pro.price, pro.description, pro.producturl, pro.createdAt, us.id as userId, us.username FROM products as pro JOIN users as us ON pro.userId = us.id '
+'SELECT pro.id, pro.name, pro.price, pro.description, pro.producturl, pro.createdAt, pro.area, us.id as userId, us.username FROM products as pro JOIN users as us ON pro.userId = us.id '
 const ORDER_DESC = 'ORDER BY pro.createdAt DESC';
 export async function getAll() {
   return db.execute(`${SELECT_JOIN} ${ORDER_DESC}`)
@@ -26,16 +26,16 @@ export async function getById(id) {
 
 }
 
-export async function create(name, price,description,producturl,userId) {
+export async function create(name, price,description,producturl,userId,area) {
   console.log('생성시도',name, price,description,producturl,userId);
-  return db.execute('INSERT INTO products (name, createdAt, price,description,producturl,userId) VALUES(?,?,?,?,?,?)',[name, new Date, price,description,producturl,userId])
+  return db.execute('INSERT INTO products (name, createdAt, price,description,producturl,userId,area) VALUES(?,?,?,?,?,?,?)',[name, new Date, price,description,producturl,userId,area])
   .then(result => getById(result[0].insertId))
   
 }
 
-export async function update(id, name, price, description, producturl) {
+export async function update(id, name, price, description, producturl,area) {
   console.log('czczcz',id, name, price, description, producturl);
-  return db.execute('UPDATE products SET name=?, price=?, description=?, producturl=? WHERE id=?',[name,price,description, producturl,id])
+  return db.execute('UPDATE products SET name=?, price=?, description=?, producturl=?, area=? WHERE id=?',[name,price,description, producturl,id,area])
  
 }
 

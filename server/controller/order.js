@@ -2,10 +2,8 @@ import * as OrderRepository from '../data/order.js';
 
 
 export async function getChat(req, res, next) {
-  const id = req.params.id;
-  
-  console.log('id chz',id)
-  const chat = await OrderRepository.getChatProduct(id);
+
+  const chat = await OrderRepository.getChatProduct(req.userId)
   console.log('chatch',chat);
   res.status(200).json(chat)
    
@@ -14,7 +12,7 @@ export async function getChat(req, res, next) {
 export async function getbuyOrder(req, res, next) {
 
   const chat = await OrderRepository.getbuyerChat(req.userId);
-  console.log('buyerOrder Check',chat);
+  console.log('getbuyOrder',chat);
   res.status(200).json(chat)
    
 }

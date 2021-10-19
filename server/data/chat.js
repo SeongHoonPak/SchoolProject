@@ -1,46 +1,28 @@
 import { db } from '../db/database.js';
 import * as userRepository from './auth.js';
 
-const select = 'SELECT ch.text, ch.createdAt, us.username'
+const select = 'SELECT ch.message, ch.createdAt, us.username'
+const ORDER_DESC = 'ORDER BY ch.createdAt DESC';
+
+// const inneruser = 'INNER JOIN users as us ON ord.userId=us.id'
+// `${select} FROM chats as ch INNER JOIN orders as ord ON ord.id =? ${inneruser}`
 export async function getByChatId(orderId) {
   
-    return db.execute(`SELECT * FROM chats as ch JOIN users as us ON ch.orderId = ? AND us.id = ch.userId`, [orderId]).then(result=> 
+    return db.execute(`${select} FROM chats as ch JOIN users as us ON ch.orderId = ? AND us.id = ch.userId ${ORDER_DESC}`, [orderId]).then(result=> 
      result[0]  
     );
   }
   
 export async function getById(id) {
-    return db.execute(`${select} FROM chats as ch JOIN users as us ON ch.id=? AND ch.userId = us.id`, [id]).then(result=> 
+    
+    return db.execute(`${select} FROM chats as ch JOIN users as us  WHERE ch.id=? AND us.id = ch.userId`, [id]).then(result=> 
       result[0][0]  
     );
   }
-export async function create(text,productId, orderId,userId) {
-    return db.execute('INSERT INTO chats (text, productId, orderId, userId,createdAt) VALUES(?,?,?,?,?)',[text,productId, orderId,userId,new Date])
+export async function create(text,userId,orderId) {
+  console.log('ch',text,userId,orderId);
+    return db.execute('INSERT INTO chats (message, userId, orderId,createdAt) VALUES(?,?,?,?)',[text,userId,orderId,new Date])
     .then(result => getById(result[0].insertId))
     
   }
 
-
-
-//   import { db } from '../db/database.js';
-// import * as userRepository from './auth.js';
-
-// const select = 'SELECT ch.text, ch.createdAt, us.username'
-// export async function getByChatId(orderId) {
-//   db.execute(`${select} FROM chats as ch JOIN users as us ON ch.orderId = ?`, [orderId]).then(result=> 
-//     console.log('ch확인좀zczxc',result[0]))
-//     return db.execute(`${select} FROM chats as ch JOIN users as us ON ch.productId=? AND ch.userId=? AND us.id = ch.userId`, [id,userId]).then(result=> 
-//      result[0]  
-//     );
-//   }
-  
-// export async function getById(id) {
-//     return db.execute(`${select} FROM chats as ch JOIN users as us ON ch.id=? AND ch.userId = us.id`, [id]).then(result=> 
-//       result[0][0]  
-//     );
-//   }
-// export async function create(text,productId, orderId,userId) {
-//     return db.execute('INSERT INTO chats (text, productId, orderId, userId,createdAt) VALUES(?,?,?,?,?)',[text,productId, orderId,userId,new Date])
-//     .then(result => getById(result[0].insertId))
-    
-//   }

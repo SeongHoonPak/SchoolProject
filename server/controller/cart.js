@@ -3,7 +3,7 @@ import * as ProductRepository from '../data/Product.js';
 
 export async function getCarts(req, res, next) {
     console.log('유저아이디 확인좀',req.userId);
-    const Product = await CartRepository.getAllByUserId(req.userId);
+    const Product = await CartRepository.getAllById(req.userId);
     console.log('zxcxsasd',Product);
     if (Product) {
       res.status(200).json(Product);

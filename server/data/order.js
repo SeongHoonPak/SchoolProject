@@ -1,10 +1,11 @@
 import { db } from '../db/database.js';
 
+const ORDER_DESC = 'ORDER BY pro.createdAt DESC';
 
-export async function getChatProduct(id) {
-  console.log('Order check',id);
-  // DISTINCT userId
-  return db.execute('SELECT id, productId FROM orders WHERE orders.productId =?',[id]).then(result=> 
+export async function getChatProduct(userId) {
+  console.log('Order check',userId);
+    // DISTINCT userId
+  return db.execute('SELECT orders.id, pro.id as productId, pro.name FROM orders JOIN products as pro ON pro.id = orders.productId AND pro.userId = ?  ',[userId]).then(result=> 
     result[0]  
    );
 }
