@@ -31,7 +31,9 @@ router.post('/login', validateCredential, authController.login);
 
 router.post('/logout', authController.logout);
 
-// router.get('/user', authController.user);
+router.post('/', authController.postUsermanner);
+
+router.get('/', authController.getUsermanner);
 
 router.get('/me', isAuth, authController.me);
 

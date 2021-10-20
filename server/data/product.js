@@ -35,7 +35,7 @@ export async function create(name, price,description,producturl,userId,area) {
 
 export async function update(id, name, price, description, producturl,area) {
   console.log('czczcz',id, name, price, description, producturl);
-  return db.execute('UPDATE products SET name=?, price=?, description=?, producturl=?, area=? WHERE id=?',[name,price,description, producturl,id,area])
+  return db.execute('UPDATE products SET name=?, price=?, description=?, producturl=?, area=? WHERE id=?',[name,price,description, producturl,area,id])
  
 }
 
