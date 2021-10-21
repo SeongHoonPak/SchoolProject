@@ -76,13 +76,14 @@ export async function me(req, res, next) {
   export async function getUsermanner(req, res, next) {
     const username = req.query.username;
     const manner = await userRepository.getUsermanner(username);
-    console.log('getmanner check',manner)
+    console.log('getUsermanner?',manner.manner);
+    return res.status(200).json(manner.manner)
     }
   export async function postUsermanner(req, res, next) {
       const {username, count} = req.body;
       const manner = count == '+' ? 0.1 : -0.1
       const manners = await userRepository.postUsermanner(username, manner);
-      console.log('cm cz',username, count)
+    return res.status(200).json(manners.manner)
       }
       
   

@@ -21,8 +21,8 @@ import {db} from '../db/database.js'
   export async function postUsermanner(username, manner){
     const userId = await findByUsername(username)
     console.log('userId 체크',userId.id)
-    return db.execute('UPDATE manners SET manner=manner*? WHERE manners.userId=?', [manners,userId.id]).then(result=> 
-      console.log('ch',result)  
+    return db.execute('UPDATE manners SET manner=manner+? WHERE manners.userId=?', [manner,userId.id]).then(result=> 
+      getUsermanner(username)
     );
   }
 
@@ -31,9 +31,9 @@ import {db} from '../db/database.js'
      'INSERT INTO manners (userId, manner) VALUES (?,?)', 
      [userId, 36.5]
     )
-  //   .then((result) => {
-  //    result[0].insertId;
-  //  })
+    .then((result) => {
+     console.log('set manner!!',result)
+   })
   }
   
 
