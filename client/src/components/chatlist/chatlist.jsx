@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import { fetchToken } from "../../context/AuthContext";
-import Socket from "../../network/socket";
-import ChatService from "../../service/chatservice";
-import Chat from "../chat/chat";
 
-const Chatlist = ({
-  httpClient,
-  username,
-  orderService,
-  id,
-  orderId,
-  productService,
-}) => {
+const Chatlist = ({ username, orderService }) => {
   const [chatlist, setChatList] = useState([]);
   const [seller, setSeller] = useState([]);
   const history = useHistory("");

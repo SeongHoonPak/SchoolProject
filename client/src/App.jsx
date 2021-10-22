@@ -107,7 +107,10 @@ function App({
           />
         </Route>
         <Route exact path="/:username">
-          <MyProducts productService={productService} />
+          <MyProducts
+            authService={authService}
+            productService={productService}
+          />
         </Route>
       </Switch>
     </>

@@ -13,7 +13,7 @@ import {db} from '../db/database.js'
   }
 
   export async function getUsermanner(username) {
-    return db.execute('SELECT * FROM manners as ma JOIN users as us ON us.username=?', [username]).then(result=> 
+    return db.execute('SELECT * FROM manners as ma JOIN users as us ON ma.userId = us.id AND us.username=?', [username]).then(result=> 
       result[0][0]  
     );
   }

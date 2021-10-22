@@ -10,7 +10,7 @@ const Chat = ({ httpClient }) => {
   const [chats, setChats] = useState([]);
   const [open, setOpen] = useState("상대방이 접속하지 않았습니다.");
   const chatService = new ChatService(httpClient);
-  const { orderId, id, owner } = history.location.state;
+  const { orderId, id } = history.location.state;
 
   const onCreated = chat => {
     setOpen(false);
@@ -30,7 +30,8 @@ const Chat = ({ httpClient }) => {
     // .catch(onError);
 
     const stopSync = chatServices.onSync(
-      chat => setChats(chats => [chat, ...chats]),
+      chat => onCreated(chat),
+      // setChats(chats => [chat, ...chats]),
       orderId
     );
     return () => stopSync();
@@ -70,7 +71,7 @@ const Chat = ({ httpClient }) => {
           <>
             {(chat.username && (
               <span>
-                {chat.username} : {chat.text} - {chat.createdAt}
+                {chat.username} : {chat.message} - {chat.createdAt}
                 {/* {chat.chat && {chat.chat.text} - {chat.chat.createdAt} } */}
                 <hr />
               </span>

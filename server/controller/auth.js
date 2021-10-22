@@ -75,6 +75,7 @@ export async function me(req, res, next) {
 
   export async function getUsermanner(req, res, next) {
     const username = req.query.username;
+    console.log('manner username?',username);
     const manner = await userRepository.getUsermanner(username);
     console.log('getUsermanner?',manner.manner);
     return res.status(200).json(manner.manner)

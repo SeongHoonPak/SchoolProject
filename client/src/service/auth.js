@@ -17,6 +17,8 @@ export default class AuthService {
     return data;
   }
 
+
+
   async login(username, password) {
     
     const data = await this.http.fetch('/auth/login', {
@@ -33,6 +35,18 @@ export default class AuthService {
     });
   }
 
+  async getUser(username) {
+    const query = `?username=${username}`
+    return this.http.fetch(`/auth/${query}`, {
+      method: 'GET',
+    });
+  }
+  async postUsermanner(username, count) {
+    return this.http.fetch(`/auth/`, {
+      method: 'POST',
+      body: JSON.stringify({username, count})
+    });
+  }
   async logout() {
     return this.http.fetch('/auth/logout', {
       method: 'POST',

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
-import OrderService from "../../service/orderservice";
-import Chat from "../chat/chat";
 
-const Order = ({ orderService, httpClient }) => {
-  const [chatmode, setChatmode] = useState(false);
+const Order = ({ orderService }) => {
   const [orderId, setOrderId] = useState(undefined);
   const history = useHistory();
-  const { id, userId, username } = history.location.state.product;
+  const { id, username } = history.location.state.product;
 
   useEffect(() => {}, []);
 
@@ -21,7 +18,6 @@ const Order = ({ orderService, httpClient }) => {
             pathname: `/chat/${orderId}`,
             state: { orderId, id },
           });
-          setChatmode(true);
         })
         .catch(e => {
           console.log("ee", e);
