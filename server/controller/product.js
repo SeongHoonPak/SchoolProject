@@ -19,6 +19,14 @@ export async function getProduct(req, res, next) {
   }
 }
 
+export async function getSearch(req, res) {
+  const select = req.query.select;
+  console.log('select!!data',select);
+  const data = await ProductRepository.getSelect(select)
+  console.log(data,'검색결과');
+  res.status(200).json(data)
+}
+
 export async function createProduct(req, res, next) {
     console.log('생성하자');
   const { name, price, description, producturls, area} = req.body;

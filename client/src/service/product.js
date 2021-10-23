@@ -17,6 +17,13 @@ export default class ProductService {
         method: 'GET',
       });
     }
+
+    async Search(query) {
+      return this.http.fetch(`/products/search/?select=${query}`, {
+        method: 'GET',
+      });
+    }
+
     async postProduct(product, producturls) {
       console.log('post 찍어볼게',product, 'url',producturls);
       const {name, price, description,area}= product;
@@ -36,13 +43,13 @@ export default class ProductService {
     }
   
     async updateProduct(product, producturl) {
-      const {id, name, price, description}= product;
+      const {id, name, price, description,area}= product;
       
       
       console.log('업데이트 실행');
       return this.http.fetch(`/products/${id}`, {
         method: 'PUT',
-        body: JSON.stringify({ name, price, description, producturl }),
+        body: JSON.stringify({ name, price, description, producturl,area }),
       });
     }
     

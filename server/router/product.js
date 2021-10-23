@@ -18,6 +18,9 @@ const validateProduct = [
     .withMessage('금액이 너무 높습니다'),
   ];
 
+
+router.get('/search', productController.getSearch);
+
 router.get('/', productController.getProducts);
 
 

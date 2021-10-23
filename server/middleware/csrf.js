@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 export const csrfCheck = (req, res, next) => {
   console.log('url check!!!',req.originalUrl);
   
-  console.log('url check!!!',req);
   if (
     (req.originalUrl === '/chats' || req.method === 'GET') ||
     req.method === 'OPTIONS' ||

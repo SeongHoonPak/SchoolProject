@@ -7,7 +7,8 @@ const ProductRegister = ({ FileInput, productService }) => {
     : "";
   console.log("xzvavasv", historyState);
   const { id, name, description, price, area, producturl } = historyState;
-  const spliturl = producturl && producturl.replace(/\[|]|"/g, "").split(",");
+  const spliturl =
+    (producturl && producturl.replace(/\[|]|"/g, "").split(",")) || [];
   const [producturls, setProducturls] = useState(spliturl);
 
   const [error, setError] = useState("");

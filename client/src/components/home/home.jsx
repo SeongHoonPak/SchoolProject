@@ -1,9 +1,17 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import Products from "../products/products";
+import SearchHeader from "../serch_header/search_header";
 
 const Home = memo(
-  ({ productService, username, cartService, FileInput, product_id }) => {
+  ({
+    seletedProduct,
+    productService,
+    username,
+    cartService,
+    FileInput,
+    product_id,
+  }) => {
     const [products, setProducts] = useState([]);
     const history = useHistory();
     const [error, setError] = useState("");
@@ -19,6 +27,15 @@ const Home = memo(
         )
         .catch(error => setError(error.toString()));
     const nameproduct = username && true;
+
+    const search = useCallback(
+      async query => {
+        const product = await productService.Search(query);
+        product.length > 0 && setProducts(product);
+      },
+      [productService]
+    );
+
     useEffect(() => {
       product_id
         ? productService
@@ -41,6 +58,7 @@ const Home = memo(
 
     return (
       <>
+        <SearchHeader onSearch={search} />
         {products.map(product => (
           <Products
             productService={productService}
