@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import Products from "../products/products";
-import SearchHeader from "../serch_header/search_header";
+import SearchHeader from "../search_header/search_header";
 
 const Home = memo(
   ({

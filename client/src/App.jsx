@@ -7,7 +7,7 @@ import Chatlist from "./components/chatlist/chatlist";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
 import Order from "./components/order/order";
-import SearchHeader from "./components/serch_header/search_header";
+import SearchHeader from "./components/search_header/search_header";
 import { AuthProvider } from "./context/AuthContext";
 import { logoutAction } from "./modules/user";
 import MyProducts from "./pages/MyProduct";

@@ -8,20 +8,15 @@ const Cart = ({ cartService }) => {
     const path = "/product/" + product.id;
     console.log(path);
     console.log("카트체크ㅏㅎㅂ니다,", product);
+    const UrlArray = product.producturl.replace(/\[|]|"/g, "").split(",");
+    console.log("체크url?", UrlArray);
     return (
       <>
         <Link to={path}>
           <p>상품 이름 : {product.name}</p>
           <span className="product-date">{parseDate(product.createdAt)}</span>
-          {product.producturl.map(url => {
-            return (
-              <img
-                key={Math.random()}
-                className="card-img-top"
-                src={url.fileurls}
-                alt="Card image cap"
-              />
-            );
+          {UrlArray.map(url => {
+            return <img key={Math.random()} src={url} />;
           })}
         </Link>
       </>
