@@ -11,7 +11,7 @@ export async function getAll() {
 }
 export async function getSelect(select) {
   console.log('셀렉요청',select);
-  return db.execute(`${SELECT_JOIN} WHERE pro.name=? ${ORDER_DESC}`,[select])
+  return db.execute(`${SELECT_JOIN} WHERE pro.name LIKE ? ${ORDER_DESC}`,[`%${select}%`])
   .then(result => result[0]);
 }
 

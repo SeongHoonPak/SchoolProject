@@ -1,5 +1,6 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import Area from "../Area/area";
 import Products from "../products/products";
 import SearchHeader from "../search_header/search_header";
 
@@ -14,6 +15,7 @@ const Home = memo(
   }) => {
     const [products, setProducts] = useState([]);
     const history = useHistory();
+    const [area, setArea] = useState("");
     const [error, setError] = useState("");
     const Delete = productId =>
       productService
@@ -56,8 +58,20 @@ const Home = memo(
     };
     const onUsernameClick = product => history.push(`/${product.username}`);
 
+    const onChangeArea = e => {
+      const { value } = e.target;
+      (value == "지역" &&
+        productService
+          .getProducts(username) // 모든 상품 가져오기
+          .then(product => setProducts([...product]))
+          .catch(onError)) ||
+        setProducts(products =>
+          products.filter(product => product.area == value)
+        );
+    };
     return (
       <>
+        <Area onChange={onChangeArea} area={area} />
         <SearchHeader onSearch={search} />
         {products.map(product => (
           <Products

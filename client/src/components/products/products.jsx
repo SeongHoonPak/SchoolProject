@@ -12,7 +12,6 @@ const Products = memo(({ product, onUsernameClick, Delete, cartService }) => {
   const path = "/product/" + id;
   const [like, setLike] = useState(false);
 
-  console.log("체크", product, "체크체크");
   const onClickid = () => {
     history.push({
       pathname: "/productRegister",
@@ -51,7 +50,6 @@ const Products = memo(({ product, onUsernameClick, Delete, cartService }) => {
       });
   }, [cartService]);
   const owner = usernamed == username;
-  console.log("url 원본", producturl);
   const UrlArray = producturl.replace(/\[|]|"/g, "").split(",");
 
   return (

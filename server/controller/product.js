@@ -7,7 +7,6 @@ export async function getProducts(req, res) {
     : ProductRepository.getAll());
   res.status(200).json(data);
 }
-
 export async function getProduct(req, res, next) {
   const id = req.params.id;
   const Product = await ProductRepository.getById(id);

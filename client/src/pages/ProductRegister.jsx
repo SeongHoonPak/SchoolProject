@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import Area from "../components/Area/area";
 const ProductRegister = ({ FileInput, productService }) => {
   const history = useHistory();
   const historyState = history.location.state
@@ -10,7 +11,7 @@ const ProductRegister = ({ FileInput, productService }) => {
   const spliturl =
     (producturl && producturl.replace(/\[|]|"/g, "").split(",")) || [];
   const [producturls, setProducturls] = useState(spliturl);
-
+  const [areas, setArea] = useState("지역을 선택하세요");
   const [error, setError] = useState("");
   const onFileChange = file => {
     console.log("qqqqqqqqqqqqq", producturls, "adasdsad", producturl);
@@ -76,14 +77,19 @@ const ProductRegister = ({ FileInput, productService }) => {
         return setProduct({ ...product, [name]: value });
       case "description":
         return setProduct({ ...product, [name]: value });
-      case "area":
-        return setProduct({ ...product, [name]: value });
       default:
     }
   };
   const erroralert = () => {
     error && alert(`${error}`);
   };
+
+  const onChangeArea = e => {
+    const { value } = e.target;
+    setProduct({ ...product, area: value });
+    console.log("chchh", product);
+  };
+
   useEffect(() => {
     erroralert();
   }, [error]);
@@ -117,14 +123,7 @@ const ProductRegister = ({ FileInput, productService }) => {
           required
           onChange={onChange}
         />
-        <input
-          name="area"
-          type="text"
-          placeholder="Edit product area"
-          value={product.area}
-          required
-          onChange={onChange}
-        />
+        <Area onChange={onChangeArea} area={area} />
         <FileInput type="text" onFileChange={onFileChange} />
 
         <p>업로드 될 이미지</p>
