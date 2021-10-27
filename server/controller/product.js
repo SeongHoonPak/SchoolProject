@@ -7,6 +7,12 @@ export async function getProducts(req, res) {
     : ProductRepository.getAll());
   res.status(200).json(data);
 }
+export async function getArea(req, res) {
+  // decodeURIComponent(req.params.id)
+  const Product = await ProductRepository.getByArea(req.params.id) 
+  res.status(200).json(Product)
+}
+
 export async function getProduct(req, res, next) {
   const id = req.params.id;
   const Product = await ProductRepository.getById(id);

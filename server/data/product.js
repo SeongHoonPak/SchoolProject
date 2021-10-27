@@ -28,6 +28,12 @@ export async function getById(id) {
  
 }
 
+export async function getByArea(area) {
+  console.log('AREA????',area);
+  return db.execute(`${SELECT_JOIN} WHERE pro.area = ? ${ORDER_DESC}`,[area])
+  .then(result => result[0]);
+}
+
 export async function create(name, price,description,producturl,userId,area) {
   console.log('생성시도',name, price,description,producturl,userId);
   return db.execute('INSERT INTO products (name, createdAt, price,description,producturl,userId,area) VALUES(?,?,?,?,?,?,?)',[name, new Date, price,description,producturl,userId,area])

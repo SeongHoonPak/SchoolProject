@@ -24,6 +24,8 @@ router.get('/search', productController.getSearch);
 router.get('/', productController.getProducts);
 
 
+router.get('/area/:id', productController.getArea);
+
 router.get('/:id', productController.getProduct);
 
 

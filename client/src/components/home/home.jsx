@@ -62,12 +62,17 @@ const Home = memo(
       const { value } = e.target;
       (value == "지역" &&
         productService
-          .getProducts(username) // 모든 상품 가져오기
+          .getProducts() // 모든 상품 가져오기
           .then(product => setProducts([...product]))
           .catch(onError)) ||
-        setProducts(products =>
-          products.filter(product => product.area == value)
-        );
+        productService
+          .getArea(value) // 모든 상품 가져오기
+          .then(product => setProducts([...product]))
+          .catch(onError);
+
+      // setProducts(products =>
+      //   products.filter(product => product.area == value)
+      // );
     };
     return (
       <>

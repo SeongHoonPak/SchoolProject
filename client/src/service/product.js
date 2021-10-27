@@ -18,7 +18,13 @@ export default class ProductService {
       });
     }
 
-   
+    async getArea(area){
+      console.log("요청지역",area)
+      return this.http.fetch(`/products/area/${encodeURIComponent(area)}`, {
+        method: 'GET',
+      });
+      
+    }
 
     async postProduct(product, producturls) {
       console.log('post 찍어볼게',product, 'url',producturls);
