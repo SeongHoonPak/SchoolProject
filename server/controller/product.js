@@ -8,7 +8,8 @@ export async function getProducts(req, res) {
   res.status(200).json(data);
 }
 export async function getArea(req, res) {
-  // decodeURIComponent(req.params.id)
+  const username = req.query.username;
+  console.log(username,'username check')
   const Product = await ProductRepository.getByArea(req.params.id) 
   res.status(200).json(Product)
 }
