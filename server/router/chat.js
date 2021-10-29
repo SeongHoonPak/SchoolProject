@@ -25,5 +25,6 @@ router.post('/', isAuth, chatController.createChat)
 
 router.post('/:id', isAuth, chatController.openChat)
 
+router.delete('/:id', isAuth ,chatController.removeChat)
 
 export default router;

@@ -26,7 +26,7 @@ export async function getProduct(req, res, next) {
 }
 
 export async function getSearch(req, res) {
-  const select = req.query.select;
+  const {select} = req.params;
   console.log('select!!data',select);
   const data = await ProductRepository.getSelect(select)
   console.log(data,'검색결과');

@@ -19,7 +19,7 @@ const validateProduct = [
   ];
 
 
-router.get('/search', productController.getSearch);
+router.get('/search/:select', productController.getSearch);
 
 router.get('/', productController.getProducts);
 

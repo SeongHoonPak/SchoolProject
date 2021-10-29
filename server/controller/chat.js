@@ -40,3 +40,19 @@ export async function createChat(req, res, next) {
     res.status(201).json(chat);
     getSocketIO().emit(orderId, chat);
   }
+
+
+  export async function removeChat(req, res, next) {
+    console.log('채팅방 삭제시도');
+    const id = req.params.id;
+    const Chat = await chatRepository.getByChatId(id);
+    console.log('삭제 채팅방확인',Chat);
+    if (!Chat) {
+      return res.status(404).json({ message: `Chat not found: ${id}` });
+    }
+    // if (Product.userId !== req.userId) {
+    //   return res.sendStatus(403);
+    // }
+    await chatRepository.remove(id);
+    res.sendStatus(204);
+  }

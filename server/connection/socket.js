@@ -7,7 +7,7 @@ class Socket {
     this.io = new Server(server, {
       cors: {
         origin: config.cors.allowedOrigin,
-      },
+      }
     });
     console.log('소켓 연결해보자');
     this.io.use((socket, next) => {

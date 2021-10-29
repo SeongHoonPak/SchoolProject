@@ -26,3 +26,7 @@ export async function create(text,userId,orderId) {
     
   }
 
+  export async function remove(id) {
+    console.log('삭제할게요',id);
+    return db.execute('DELETE FROM orders WHERE id=?',[id])
+  }
