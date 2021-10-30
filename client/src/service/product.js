@@ -26,6 +26,14 @@ export default class ProductService {
       
     }
 
+    async Search(search){
+      
+      return this.http.fetch(`/products/search/${search}`, {
+        method: 'GET',
+      });
+      
+    }
+
     async postProduct(product, producturls) {
       console.log('post 찍어볼게',product, 'url',producturls);
       const {name, price, description,area}= product;

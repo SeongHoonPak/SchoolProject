@@ -37,6 +37,12 @@ const Chat = ({ httpClient }) => {
     return () => stopSync();
   }, []);
 
+  const onClose = async event => {
+    event.preventDefault();
+    chatService.deleteChat(orderId).then(created => {
+      history.push("/chatlist");
+    });
+  };
   const onSubmit = async event => {
     event.preventDefault();
     chatService.postChat(chat, id, orderId).then(created => {
@@ -66,6 +72,7 @@ const Chat = ({ httpClient }) => {
           Post
         </button>
       </form>
+      <button onClick={onClose}>채팅종료하기</button>
       {chats.map(chat => {
         return (
           <>

@@ -11,10 +11,8 @@ const ProductRegister = ({ FileInput, productService }) => {
   const spliturl =
     (producturl && producturl.replace(/\[|]|"/g, "").split(",")) || [];
   const [producturls, setProducturls] = useState(spliturl);
-  const [areas, setArea] = useState("지역을 선택하세요");
   const [error, setError] = useState("");
   const onFileChange = file => {
-    console.log("qqqqqqqqqqqqq", producturls, "adasdsad", producturl);
     producturl &&
       producturls[0] == producturl.replace(/\[|]|"/g, "").split(",") &&
       setProducturls([]);
@@ -23,7 +21,6 @@ const ProductRegister = ({ FileInput, productService }) => {
       return [...producturls, fileurls];
     });
   };
-  console.log("확인!!", producturls);
   const [product, setProduct] = useState({
     id,
     description,
@@ -32,9 +29,6 @@ const ProductRegister = ({ FileInput, productService }) => {
     area,
   });
 
-  console.log("ch", product);
-
-  console.log("ch", historyState);
   const onSubmit = async event => {
     event.preventDefault();
 
@@ -42,34 +36,22 @@ const ProductRegister = ({ FileInput, productService }) => {
       productService
         .updateProduct(product, producturls)
         .then(() => {
-          // setTimeout(refresh, 200);
           history.push("/");
           console.log("업데이트 실행");
-          // window.location.replace("/");
         })
         .catch(setError)) ||
       productService
         .postProduct(product, producturls)
         .then(() => {
-          // setTimeout(refresh, 200);
           history.push("/");
 
           console.log("포스트 실행");
-          // window.location.replace("/");
         })
         .catch(setError);
   };
 
-  // const erroralert = () => {
-  //   error && alert(`${error}`);
-  // };
-
-  // useEffect(() => {
-  //   erroralert();
-  // }, [error]);
   const onChange = event => {
     const { name, value } = event.target;
-    console.log("name??", name, "value???", value, "상품", product);
     switch (name) {
       case "name":
         return setProduct({ ...product, [name]: value });
@@ -87,7 +69,6 @@ const ProductRegister = ({ FileInput, productService }) => {
   const onChangeArea = e => {
     const { value } = e.target;
     setProduct({ ...product, area: value });
-    console.log("chchh", product);
   };
 
   useEffect(() => {

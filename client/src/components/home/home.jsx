@@ -33,7 +33,13 @@ const Home = memo(
     const search = useCallback(
       async query => {
         const product = await productService.Search(query);
-        product.length > 0 && setProducts(product);
+        console.log("검색상품", product);
+
+        product.length > 0
+          ? setProducts(product)
+          : window.location.replace("/")(
+              alert(`${query}와 일치하는 상품이 존재하지 않습니다`)
+            );
       },
       [productService]
     );
@@ -76,8 +82,14 @@ const Home = memo(
     };
     return (
       <>
-        <Area onChange={onChangeArea} area={area} />
-        <SearchHeader onSearch={search} />
+        {username ? (
+          ""
+        ) : (
+          <>
+            <Area onChange={onChangeArea} area={area} />
+            <SearchHeader onSearch={search} />
+          </>
+        )}
         {products.map(product => (
           <Products
             productService={productService}

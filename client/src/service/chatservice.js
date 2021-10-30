@@ -26,9 +26,9 @@ export default class ChatService {
           body: JSON.stringify({ text,productId, orderId }),
         });
       }
-    async deleteProduct(ProductId) {
-      console.log('삭제 실행');
-      return this.http.fetch(`/products/${ProductId}`, {
+    async deleteChat(orderId) {
+      console.log('채팅방 삭제 실행');
+      return this.http.fetch(`/chats/${orderId}`, {
         method: 'DELETE',
       });
     }

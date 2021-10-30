@@ -59,7 +59,6 @@ function App({
           <AuthProvider
             authService={authService}
             authErrorEventBus={authErrorEventBus}
-            FileInput={FileInput}
           ></AuthProvider>
         </Route>
         <Route exact path="/cart">

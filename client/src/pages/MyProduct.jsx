@@ -5,7 +5,6 @@ import Home from "../components/home/home";
 const MyProducts = ({ productService, authService }) => {
   const { username } = useParams();
   const [manner, setManner] = useState(36.5);
-  console.log("username??????", username);
   const Click = e => {
     const count = e.target.innerText;
     authService.postUsermanner(username, count).then(re => {

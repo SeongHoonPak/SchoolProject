@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 
-const Login = ({ onSignUp, onLogin, FileInput }) => {
+const Login = ({ onSignUp, onLogin }) => {
   const [signup, setSignup] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [url, setUrl] = useState("");
   const [text, setText] = useState("");
   const [isAlert, setIsAlert] = useState(false);
 
-  const onFileChange = file => {
-    const fileurls = file.url;
-  };
-  console.log("url c", url);
   const onSubmit = event => {
     event.preventDefault();
     if (signup) {
