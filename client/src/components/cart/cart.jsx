@@ -7,9 +7,7 @@ const Cart = ({ cartService }) => {
   let pro = cartproduct.map(product => {
     const path = "/product/" + product.id;
     console.log(path);
-    console.log("카트체크ㅏㅎㅂ니다,", product);
     const UrlArray = product.producturl.replace(/\[|]|"/g, "").split(",");
-    console.log("체크url?", UrlArray);
     return (
       <>
         <Link to={path}>

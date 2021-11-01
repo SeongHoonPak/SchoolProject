@@ -16,7 +16,6 @@ const Chat = ({ httpClient }) => {
     setOpen(false);
     setChats(chats => [chat, ...chats]);
   };
-  console.log();
   useEffect(() => {
     const socketClient = new Socket(process.env.REACT_APP_BASE_URL, () =>
       fetchToken()
@@ -54,7 +53,6 @@ const Chat = ({ httpClient }) => {
   const onChange = event => {
     setChat(event.target.value);
   };
-  console.log("채팅로그", chats);
   return (
     <>
       {/* {chats.map(chat => console.log(chat))} */}
@@ -73,6 +71,7 @@ const Chat = ({ httpClient }) => {
         </button>
       </form>
       <button onClick={onClose}>채팅종료하기</button>
+      <hr />
       {chats.map(chat => {
         return (
           <>
