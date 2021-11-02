@@ -28,7 +28,7 @@ const ProductRegister = ({ FileInput, productService }) => {
     name,
     area,
   });
-
+  console.log("product??", product);
   const onSubmit = async event => {
     event.preventDefault();
 

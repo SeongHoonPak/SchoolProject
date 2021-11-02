@@ -5,14 +5,7 @@ import Products from "../products/products";
 import SearchHeader from "../search_header/search_header";
 
 const Home = memo(
-  ({
-    seletedProduct,
-    productService,
-    username,
-    cartService,
-    FileInput,
-    product_id,
-  }) => {
+  ({ productService, username, cartService, FileInput, product_id }) => {
     const [products, setProducts] = useState([]);
     const history = useHistory();
     const [area, setArea] = useState("");
@@ -32,10 +25,10 @@ const Home = memo(
 
     const search = useCallback(
       async query => {
-        const product = await productService.Search(query);
-        console.log("검색상품", product);
+        const querys = query.trim();
+        const product = querys && (await productService.Search(query));
 
-        product.length > 0
+        product && product.length > 0
           ? setProducts(product)
           : window.location.replace("/")(
               alert(`${query}와 일치하는 상품이 존재하지 않습니다`)

@@ -53,11 +53,11 @@ export default class ProductService {
     }
   
     async updateProduct(product, producturl) {
-      const {id, name, price, description}= product;
+      const {id, name, price, description, area}= product;
       console.log('업데이트 실행');
       return this.http.fetch(`/products/${id}`, {
         method: 'PUT',
-        body: JSON.stringify({ name, price, description, producturl }),
+        body: JSON.stringify({ name, price, description, producturl,area }),
       });
     }
     
