@@ -102,10 +102,16 @@ function App({
           </AuthProvider>
         </Route>
         <Route exact path="/product/:id">
-          <ThisProducts
-            productService={productService}
-            cartService={cartService}
-          />
+          <AuthProvider
+            authService={authService}
+            authErrorEventBus={authErrorEventBus}
+            FileInput={FileInput}
+          >
+            <ThisProducts
+              productService={productService}
+              cartService={cartService}
+            />
+          </AuthProvider>
         </Route>
 
         <Route exact path="/:username">

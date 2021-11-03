@@ -1,7 +1,6 @@
 import React from "react";
 
 const Area = ({ onChange }) => {
-  console.log("oncha?", onChange);
   return (
     <>
       <div class="dropdown-content" style={{ padding: 0, minWidth: 300 }}>

@@ -3,7 +3,7 @@ export default class AuthService {
     this.http = http;
   }
 
-  async signup(username, password, name, email, url) {
+  async signup(username, password, name, email, number) {
     const data = await this.http.fetch('/auth/signup', {
       method: 'POST',
       body: JSON.stringify({
@@ -11,7 +11,7 @@ export default class AuthService {
         password,
         name,
         email,
-        url,
+        number,
       }),
     });
     return data;

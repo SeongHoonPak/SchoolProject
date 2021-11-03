@@ -47,8 +47,8 @@ export function AuthProvider({
   }, [authService]);
 
   const signUp = useCallback(
-    async (username, password, name, email) =>
-      authService.signup(username, password, name, email).then(user => {
+    async (username, password, name, email, number) =>
+      authService.signup(username, password, name, email, number).then(user => {
         dispatch(loginAction(user.username));
         window.location.replace("/");
       }),

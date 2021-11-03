@@ -6,13 +6,14 @@ const Login = ({ onSignUp, onLogin }) => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
   const [text, setText] = useState("");
   const [isAlert, setIsAlert] = useState(false);
 
   const onSubmit = event => {
     event.preventDefault();
     if (signup) {
-      onSignUp(username, password, name, email).catch(setError);
+      onSignUp(username, password, name, email, number).catch(setError);
     } else {
       onLogin(username, password).catch(setError);
     }
@@ -27,6 +28,7 @@ const Login = ({ onSignUp, onLogin }) => {
     const {
       target: { name, value, checked },
     } = event;
+    console.log(name, value);
     switch (name) {
       case "username":
         return setUsername(value);
@@ -36,6 +38,8 @@ const Login = ({ onSignUp, onLogin }) => {
         return setName(value);
       case "email":
         return setEmail(value);
+      case "number":
+        return setNumber(value);
       case "signup":
         return setSignup(checked);
       default:
@@ -63,26 +67,35 @@ const Login = ({ onSignUp, onLogin }) => {
           onChange={onChange}
         />
         {signup && (
-          <input
-            name="name"
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={onChange}
-            className="form-input"
-            required
-          />
-        )}
-        {signup && (
-          <input
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={onChange}
-            className="form-input"
-            required
-          />
+          <>
+            <input
+              name="name"
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={onChange}
+              className="form-input"
+              required
+            />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={onChange}
+              className="form-input"
+              required
+            />
+            <input
+              name="number"
+              type="tel"
+              placeholder="Phone Number"
+              value={number}
+              onChange={onChange}
+              className="form-input"
+              required
+            />
+          </>
         )}
 
         <div className="form-signup">

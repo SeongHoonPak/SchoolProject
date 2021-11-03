@@ -39,10 +39,10 @@ import {db} from '../db/database.js'
 
   export async function createUser(user) {
     console.log('유저체크',user);
-    const {username, password, name, email} = user;
+    const {username, password, name, email, number} = user;
    return db.execute(
-     'INSERT INTO users (username, password, name, email) VALUES (?,?,?,?)', 
-     [username, password, name, email]
+     'INSERT INTO users (username, password, name, email, number) VALUES (?,?,?,?,?)', 
+     [username, password, name, email,number]
     )
     .then((result) => {
    return result[0].insertId;
