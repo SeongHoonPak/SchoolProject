@@ -36,7 +36,10 @@ import {db} from '../db/database.js'
    })
   }
   
-
+  export async function updateUser(userId,  username, password, name, email, number) {
+    console.log('czczcz',userId,  username, password, name, email, number);
+    return db.execute('UPDATE users SET username=?, password=?, name=?, email=?, number=? WHERE id=?',[ username, password, name, email, number,userId])
+  }
   export async function createUser(user) {
     console.log('유저체크',user);
     const {username, password, name, email, number} = user;

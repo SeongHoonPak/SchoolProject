@@ -24,6 +24,28 @@ export async function signup(req, res) {
   res.status(201).json({ token, username });
 }
 
+export async function updateUser(req, res) {
+  req.userId 
+  const { username, password, name, email, number} = req.body;
+  const found = await userRepository.findByUsername(username);
+  if (found) {
+    return res.status(409).json({ message: `${username} already exists` });
+  }
+  const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
+  const userId = await userRepository.updateUser({
+    userId: req.userId,
+    username,
+    password: hashed,
+    name,
+    email,
+    number,
+  });
+  const token = createJwtToken(userId);
+  setToken(res, token);
+  res.status(201).json({ token, username });
+}
+
+
 export async function login(req, res) {
   console.log('로그인',req);
   const { username, password } = req.body;
