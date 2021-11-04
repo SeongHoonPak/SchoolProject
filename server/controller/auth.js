@@ -25,12 +25,16 @@ export async function signup(req, res) {
 }
 
 export async function updateUser(req, res) {
-  req.userId 
-  const { username, password, name, email, number} = req.body;
-  const found = await userRepository.findByUsername(username);
+  console.log('수정 아이디 체크',req.userId)
+  const { usernamed, username, password, name, email, number} = req.body;
+  const named = usernamed == username
+  console.log('named ch',named)
+  const found = named ? false : await userRepository.findByUsername(username);
+  console.log(found,'found check')
   if (found) {
     return res.status(409).json({ message: `${username} already exists` });
   }
+  console.log('여기?')
   const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
   const userId = await userRepository.updateUser({
     userId: req.userId,
@@ -41,6 +45,7 @@ export async function updateUser(req, res) {
     number,
   });
   const token = createJwtToken(userId);
+  console.log('토큰테스트',token)
   setToken(res, token);
   res.status(201).json({ token, username });
 }

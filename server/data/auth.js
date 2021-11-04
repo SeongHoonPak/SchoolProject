@@ -36,7 +36,8 @@ import {db} from '../db/database.js'
    })
   }
   
-  export async function updateUser(userId,  username, password, name, email, number) {
+  export async function updateUser(user) {
+    const {userId,  username, password, name, email, number} = user
     console.log('czczcz',userId,  username, password, name, email, number);
     return db.execute('UPDATE users SET username=?, password=?, name=?, email=?, number=? WHERE id=?',[ username, password, name, email, number,userId])
   }

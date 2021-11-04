@@ -25,9 +25,12 @@ const validateCredential = [
     validate,
   ];
 
+
 router.post('/signup', validateSignup, authController.signup);
 
 router.post('/login', validateCredential, authController.login);
+
+router.post('/update', isAuth,validateSignup, authController.updateUser);
 
 router.post('/logout', authController.logout);
 
