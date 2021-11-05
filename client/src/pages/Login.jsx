@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const Login = ({ onSignUp, onLogin }) => {
+const Login = ({ onSignUp, onLogin, edit, onChanged }) => {
   const [signup, setSignup] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +12,9 @@ const Login = ({ onSignUp, onLogin }) => {
 
   const onSubmit = event => {
     event.preventDefault();
-    if (signup) {
+    if (edit) {
+      onChanged(username, password, name, email, number).catch(setError);
+    } else if (signup) {
       onSignUp(username, password, name, email, number).catch(setError);
     } else {
       onLogin(username, password).catch(setError);
@@ -46,6 +48,9 @@ const Login = ({ onSignUp, onLogin }) => {
     }
   };
 
+  useEffect(() => {
+    edit && setSignup(true);
+  }, []);
   return (
     <>
       <form className="auth-form" onSubmit={onSubmit}>
@@ -98,19 +103,27 @@ const Login = ({ onSignUp, onLogin }) => {
           </>
         )}
 
-        <div className="form-signup">
-          <input
-            name="signup"
-            id="signup"
-            type="checkbox"
-            onChange={onChange}
-            checked={signup}
-          />
-          <label htmlFor="signup"> 회원가입 하시겠습니까?</label>
-        </div>
-        <button className="form-btn auth-form-btn" type="submit">
-          {signup ? "Sign Up" : "Sign In"}
-        </button>
+        {edit || (
+          <div className="form-signup">
+            <input
+              name="signup"
+              id="signup"
+              type="checkbox"
+              onChange={onChange}
+              checked={signup}
+            />
+            <label htmlFor="signup"> 회원가입 하시겠습니까?</label>
+          </div>
+        )}
+        {(edit && (
+          <button className="form-btn auth-form-btn" type="submit">
+            수정하기
+          </button>
+        )) || (
+          <button className="form-btn auth-form-btn" type="submit">
+            {signup ? "Sign Up" : "Sign In"}
+          </button>
+        )}
       </form>
     </>
   );

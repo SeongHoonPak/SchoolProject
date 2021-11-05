@@ -29,7 +29,7 @@ const Header = memo(({ onLogout, username, time }) => {
         )}
       </div>
       <Link to={path}>
-        <button>내상품</button>
+        <button>내정보</button>
       </Link>
       <Link to="/productRegister">
         <button>상품등록하기</button>

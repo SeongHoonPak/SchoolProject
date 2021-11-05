@@ -17,6 +17,20 @@ export default class AuthService {
     return data;
   }
 
+  async update(usernamed, username, password, name, email, number) {
+    const data = await this.http.fetch('/auth/update', {
+      method: 'POST',
+      body: JSON.stringify({
+        usernamed,
+        username,
+        password,
+        name,
+        email,
+        number,
+      }),
+    });
+    return data;
+  }
 
 
   async login(username, password) {

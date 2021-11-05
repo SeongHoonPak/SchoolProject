@@ -21,11 +21,14 @@ export function AuthProvider({
   children,
 }) {
   console.log("Auth 실행ㅎㄴ다");
+
   const { usernamed } = useSelector(state => ({
     usernamed: state.user.username,
   }));
   const dispatch = useDispatch();
   const history = useHistory("");
+  const { edit } = history.location.state ? history.location.state : "";
+
   const [user, setUser] = useState(undefined);
   const [csrfToken, setCsrfToken] = useState(undefined);
   useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
@@ -55,6 +58,17 @@ export function AuthProvider({
     [authService]
   );
 
+  const update = useCallback(
+    async (username, password, name, email, number) =>
+      authService
+        .update(usernamed, username, password, name, email, number)
+        .then(user => {
+          console.log("업데이트 유저 체크", user);
+          dispatch(loginAction(user.username));
+          window.location.replace("/");
+        }),
+    [authService]
+  );
   const logIn = useCallback(
     async (username, password) => {
       const user = await authService.login(username, password);
@@ -74,8 +88,10 @@ export function AuthProvider({
   return (
     <>
       {
-        (console.log("유저체크", usernamed),
-        usernamed ? (
+        (console.log("유저체크", usernamed, "에디트 체크", edit),
+        edit ? (
+          <Login username={usernamed} onChanged={update} edit={edit} />
+        ) : usernamed ? (
           children
         ) : (
           <div className="app">
