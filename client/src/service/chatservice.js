@@ -11,8 +11,6 @@ export default class ChatService {
       }
      
     async postopenChat(orderId) {
-      console.log('openChat 시도',orderId, `/chats/${orderId}`);
-      console.log('cc',this.http)
         return this.http.fetch(`/chats/${orderId}`, {
           method: 'POST',
           body: JSON.stringify({orderId}),
@@ -20,14 +18,12 @@ export default class ChatService {
       }
   
     async postChat(text,productId, orderId) {
-      console.log('채팅생성');
         return this.http.fetch(`/chats`, {
           method: 'POST',
           body: JSON.stringify({ text,productId, orderId }),
         });
       }
     async deleteChat(orderId) {
-      console.log('채팅방 삭제 실행');
       return this.http.fetch(`/chats/${orderId}`, {
         method: 'DELETE',
       });

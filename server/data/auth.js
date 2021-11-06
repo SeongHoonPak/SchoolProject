@@ -1,7 +1,6 @@
 import {db} from '../db/database.js'
   export async function findByUsername(username) {
     return db.execute('SELECT * FROM users WHERE username=?', [username]).then(result=> 
-  
       result[0][0]
     );
   }
@@ -20,7 +19,6 @@ import {db} from '../db/database.js'
 
   export async function postUsermanner(username, manner){
     const userId = await findByUsername(username)
-    console.log('userId 체크',userId.id)
     return db.execute('UPDATE manners SET manner=manner+? WHERE manners.userId=?', [manner,userId.id]).then(result=> 
       getUsermanner(username)
     );
@@ -38,11 +36,9 @@ import {db} from '../db/database.js'
   
   export async function updateUser(user) {
     const {userId,  username, password, name, email, number} = user
-    console.log('czczcz',userId,  username, password, name, email, number);
     return db.execute('UPDATE users SET username=?, password=?, name=?, email=?, number=? WHERE id=?',[ username, password, name, email, number,userId])
   }
   export async function createUser(user) {
-    console.log('유저체크',user);
     const {username, password, name, email, number} = user;
    return db.execute(
      'INSERT INTO users (username, password, name, email, number) VALUES (?,?,?,?,?)', 

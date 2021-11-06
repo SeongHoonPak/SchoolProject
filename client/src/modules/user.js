@@ -31,7 +31,7 @@ export const loginAction = (requestData) => {
           ...state,
           username: action.username,
           isLoggedIn: true,
-      time: new Date()
+          time: new Date()
         });
       case (LOGOUT_USER):
         return ({

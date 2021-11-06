@@ -28,7 +28,6 @@ export default class HttpClient {
     }
   
     async fetch(url, options) {
-      console.log('fetch url, oprtiom',url, options);
       const {body, method, headers} = options;
       const req = {
         url,

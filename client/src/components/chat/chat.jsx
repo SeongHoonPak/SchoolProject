@@ -22,17 +22,10 @@ const Chat = ({ httpClient }) => {
     );
     const chatServices = new ChatService(httpClient, socketClient);
 
-    chatService.postopenChat(orderId).then(r => console.log("rr", r));
+    chatService.postopenChat(orderId).then();
     chatService.getChat(orderId).then(result => setChats([...result]));
 
-    // chats => setChats([...chats]
-    // .catch(onError);
-
-    const stopSync = chatServices.onSync(
-      chat => onCreated(chat),
-      // setChats(chats => [chat, ...chats]),
-      orderId
-    );
+    const stopSync = chatServices.onSync(chat => onCreated(chat), orderId);
     return () => stopSync();
   }, []);
 
@@ -55,7 +48,6 @@ const Chat = ({ httpClient }) => {
   };
   return (
     <>
-      {/* {chats.map(chat => console.log(chat))} */}
       <form className="chat-form" onSubmit={onSubmit}>
         <input
           type="text"
@@ -78,7 +70,6 @@ const Chat = ({ httpClient }) => {
             {(chat.username && (
               <span>
                 {chat.username} : {chat.message} - {chat.createdAt}
-                {/* {chat.chat && {chat.chat.text} - {chat.chat.createdAt} } */}
                 <hr />
               </span>
             )) || (

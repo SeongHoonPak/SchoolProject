@@ -7,7 +7,6 @@ import {
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-
 import { loginAction, logoutAction } from "../modules/user";
 import Login from "../pages/Login";
 
@@ -20,15 +19,12 @@ export function AuthProvider({
   FileInput,
   children,
 }) {
-  console.log("Auth 실행ㅎㄴ다");
-
   const { usernamed } = useSelector(state => ({
     usernamed: state.user.username,
   }));
   const dispatch = useDispatch();
   const history = useHistory("");
   const { edit } = history.location.state ? history.location.state : "";
-
   const [user, setUser] = useState(undefined);
   const [csrfToken, setCsrfToken] = useState(undefined);
   useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
@@ -45,7 +41,6 @@ export function AuthProvider({
   }, [authService]);
 
   useEffect(() => {
-    console.log("me 실행한다");
     authService.me().then(setUser).catch(console.error);
   }, [authService]);
 
@@ -63,42 +58,37 @@ export function AuthProvider({
       authService
         .update(usernamed, username, password, name, email, number)
         .then(user => {
-          console.log("업데이트 유저 체크", user);
           dispatch(loginAction(user.username));
           window.location.replace("/");
         }),
     [authService]
   );
+
   const logIn = useCallback(
     async (username, password) => {
       const user = await authService.login(username, password);
-      console.log("로그인 유저 체크", user);
       dispatch(loginAction(user.username));
-      // window.location.replace("/");
       history.push("/");
     },
     [authService]
   );
-  const logout = useCallback(async () => {
-    await authService.logout();
-    dispatch(logoutAction());
-    // history.push("/");
-  }, [authService]);
+
+  // const logout = useCallback(async () => {
+  //   await authService.logout();
+  //   dispatch(logoutAction());
+  // }, [authService]);
 
   return (
     <>
-      {
-        (console.log("유저체크", usernamed, "에디트 체크", edit),
-        edit ? (
-          <Login username={usernamed} onChanged={update} edit={edit} />
-        ) : usernamed ? (
-          children
-        ) : (
-          <div className="app">
-            <Login onSignUp={signUp} onLogin={logIn} FileInput={FileInput} />
-          </div>
-        ))
-      }
+      {edit ? (
+        <Login username={usernamed} onChanged={update} edit={edit} />
+      ) : usernamed ? (
+        children
+      ) : (
+        <div className="app">
+          <Login onSignUp={signUp} onLogin={logIn} FileInput={FileInput} />
+        </div>
+      )}
     </>
   );
 }

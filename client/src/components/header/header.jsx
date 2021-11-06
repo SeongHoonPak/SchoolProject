@@ -5,10 +5,6 @@ import { loginAction, logoutAction } from "../../modules/user";
 
 const Header = memo(({ onLogout, username, time }) => {
   const dispatch = useDispatch();
-  // const { username, time } = useSelector(state => ({
-  //   username: state.user.username,
-  //   time: state.user.time,
-  // }));
   const now = new Date();
   const login = new Date(Date.parse(time));
   const timeend = 3000 - Math.floor((now - login) / 1000);

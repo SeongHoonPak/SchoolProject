@@ -31,15 +31,8 @@ const Products = memo(({ product, onUsernameClick, Delete, cartService }) => {
     });
   };
   const onClicklike = event => {
-    (like &&
-      cartService.deleteProduct(id).then(a => {
-        console.log("delete실행완료", a);
-        setLike(false);
-      })) ||
-      cartService.postProduct(id).then(a => {
-        console.log("post실행완료", a);
-        setLike(true);
-      });
+    (like && cartService.deleteProduct(id).then(setLike(false))) ||
+      cartService.postProduct(id).then(setLike(true));
   };
 
   useEffect(() => {

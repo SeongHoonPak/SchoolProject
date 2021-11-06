@@ -8,7 +8,6 @@ const Home = memo(
   ({ productService, username, cartService, FileInput, product_id }) => {
     const [products, setProducts] = useState([]);
     const history = useHistory();
-    const [area, setArea] = useState("");
     const [error, setError] = useState("");
     const Delete = productId =>
       productService
@@ -79,7 +78,7 @@ const Home = memo(
           ""
         ) : (
           <>
-            <Area onChange={onChangeArea} area={area} />
+            <Area onChange={onChangeArea} />
             <SearchHeader onSearch={search} />
           </>
         )}

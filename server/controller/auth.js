@@ -25,16 +25,12 @@ export async function signup(req, res) {
 }
 
 export async function updateUser(req, res) {
-  console.log('수정 아이디 체크',req.userId)
   const { usernamed, username, password, name, email, number} = req.body;
-  const named = usernamed == username
-  console.log('named ch',named)
-  const found = named ? false : await userRepository.findByUsername(username);
-  console.log(found,'found check')
+  const namecheck = usernamed == username
+  const found = namecheck ? false : await userRepository.findByUsername(username);
   if (found) {
     return res.status(409).json({ message: `${username} already exists` });
   }
-  console.log('여기?')
   const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
   const userId = await userRepository.updateUser({
     userId: req.userId,
@@ -45,17 +41,14 @@ export async function updateUser(req, res) {
     number,
   });
   const token = createJwtToken(userId);
-  console.log('토큰테스트',token)
   setToken(res, token);
   res.status(201).json({ token, username });
 }
 
 
 export async function login(req, res) {
-  console.log('로그인',req);
   const { username, password } = req.body;
   const user = await userRepository.findByUsername(username);
-  console.log('contler login user',user);
   if (!user) {
     return res.status(401).json({ message: 'Invalid user or password' });
   }
@@ -103,9 +96,7 @@ export async function me(req, res, next) {
 
   export async function getUsermanner(req, res, next) {
     const username = req.query.username;
-    console.log('manner username?',username);
     const manner = await userRepository.getUsermanner(username);
-    console.log('getUsermanner?',manner.manner);
     return res.status(200).json(manner.manner)
     }
   export async function postUsermanner(req, res, next) {

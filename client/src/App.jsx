@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import Cart from "./components/cart/cart";
@@ -7,7 +7,6 @@ import Chatlist from "./components/chatlist/chatlist";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
 import Order from "./components/order/order";
-import SearchHeader from "./components/search_header/search_header";
 import { AuthProvider } from "./context/AuthContext";
 import { logoutAction } from "./modules/user";
 import MyProducts from "./pages/MyProduct";

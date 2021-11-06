@@ -19,7 +19,6 @@ export default class OrderService {
       
   
     async postOrder(productId) {
-      console.log('ORDER 찍어볼게',productId);
       return this.http.fetch(`/orders`, {
         method: 'POST',
         body: JSON.stringify({productId}),

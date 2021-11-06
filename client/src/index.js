@@ -25,7 +25,6 @@ const authService = new AuthService(httpClient);
 const productService = new ProductService(httpClient);
 const cartService = new CartService(httpClient);
 const orderService = new OrderService(httpClient);
-  
 const imageUploader = new ImageUploader();
 
 

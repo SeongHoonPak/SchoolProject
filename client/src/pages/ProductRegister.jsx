@@ -6,7 +6,6 @@ const ProductRegister = ({ FileInput, productService }) => {
   const historyState = history.location.state
     ? history.location.state.products
     : "";
-  console.log("xzvavasv", historyState);
   const { id, name, description, price, area, producturl } = historyState;
   const spliturl =
     (producturl && producturl.replace(/\[|]|"/g, "").split(",")) || [];
@@ -28,7 +27,6 @@ const ProductRegister = ({ FileInput, productService }) => {
     name,
     area,
   });
-  console.log("product??", product);
   const onSubmit = async event => {
     event.preventDefault();
 

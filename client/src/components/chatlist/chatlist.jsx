@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
-const Chatlist = ({ username, orderService }) => {
+const Chatlist = ({ orderService }) => {
   const [chatlist, setChatList] = useState([]);
   const [seller, setSeller] = useState([]);
   const history = useHistory("");
-  console.log("user", username);
 
   const onClick = e => {
     const values = e.target.attributes;
-    console.log("chhgg", values);
     history.push({
       pathname: `/chat/${values[0].value}`,
       state: { orderId: values[0].value, id: values[1].value, owner: true },
     });
   };
-  console.log("chat list?", chatlist[0]);
+
   useEffect(async () => {
     orderService.getOrder().then(result => {
       setChatList([result]);
